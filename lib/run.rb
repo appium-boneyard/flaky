@@ -19,7 +19,7 @@ module Flaky
     def report
       # overwrite file
       File.open(@result_file, 'w') do |f|
-        f.puts "#{@count} tests"
+        f.puts "#{@count} Runs"
         f.puts "#{@pass} Passed"
         f.puts "#{@fail} Failed"
       end
