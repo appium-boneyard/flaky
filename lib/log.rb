@@ -1,5 +1,7 @@
+# encoding: utf-8
 require 'rubygems'
 require 'escape_utils'
+require 'fileutils'
 
 module Flaky
   class << self
@@ -51,6 +53,8 @@ ANSI colors
     end
 
     def write log_file, log
+      # directory must exist
+      FileUtils.mkdir_p File.dirname log_file
       # Pry & Awesome Print use the ruby objects to insert term colors.
       # this can't be done with the raw text output.
 
