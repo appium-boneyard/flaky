@@ -1,7 +1,7 @@
 # encoding: utf-8
-require File.expand_path '../log', __FILE__
-require File.expand_path '../run', __FILE__
-require File.expand_path '../../test/mock_execute', __FILE__
+require File.expand_path '../lib/flaky/log', __FILE__
+require File.expand_path '../lib/flaky/run', __FILE__
+require File.expand_path '../mock_execute', __FILE__
 
 flaky = Flaky::Run.new
 

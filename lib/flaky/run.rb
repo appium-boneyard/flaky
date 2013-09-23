@@ -1,7 +1,4 @@
 # encoding: utf-8
-require 'fileutils'
-require 'open3'
-
 module Flaky
   module Color
     def cyan str
@@ -23,6 +20,7 @@ module Flaky
 
     def initialize
       @tests = {}
+      @start_time = Time.now
 
       result_dir = '/tmp/flaky/'
       # rm -rf result_dir
@@ -51,7 +49,13 @@ module Flaky
         end
       end
 
-      out = "Failure:\n#{failure}\nSuccess:\n#{success}"
+      out = ''
+      out += "Failure:\n#{failure}\n" unless failure.empty?
+      out += "Success:\n#{success}" unless success.empty?
+
+      duration = Time.now - @start_time
+      duration = ChronicDuration.output(duration.round) || '0s'
+      out += "\nFinished in #{duration}"
 
       # overwrite file
       File.open(@result_file, 'w') do |f|
@@ -61,7 +65,7 @@ module Flaky
       puts out
     end
 
-    def _execute run_cmd, test_name, runs
+    def _execute run_cmd, test_name, runs, appium
       # must capture exit code or log is an array.
       log, exit_code = Open3.capture2e run_cmd
 
@@ -102,20 +106,30 @@ module Flaky
       log_name = File.join result_dir, pass_str, log_name
       Flaky.write log_name, log
 
+      appium_log_name = File.join result_dir, pass_str, "#{postfix}.appium.html"
+      Flaky.write appium_log_name, appium.log
+
+      # save uncolored version
+      File.open(appium_log_name + '.nocolor.txt', 'w') do |f|
+        f.write appium.log
+      end
+
       passed
     end
 
     def execute opts={}
       run_cmd = opts[:run_cmd]
       test_name = opts[:test_name]
+      appium = opts[:appium]
 
       raise 'must pass :run_cmd' unless run_cmd
       raise 'must pass :test_name' unless test_name
+      raise 'must pass :appium' unless appium
 
       test = @tests[test_name] ||= {runs: 0, pass: 0, fail: 0}
       runs = test[:runs] += 1
 
-      passed = _execute run_cmd, test_name, runs
+      passed = _execute run_cmd, test_name, runs, appium
 
       print cyan("\n #{test_name} ") if @last_test.nil? ||
           @last_test != test_name
