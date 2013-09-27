@@ -1,5 +1,4 @@
 # encoding: utf-8
-require File.expand_path '../../flaky', __FILE__
 module Flaky
   class << self
     # Monaco 18 pt
@@ -64,10 +63,6 @@ div.grey  { color: #666666; }
       new_log = '<div>'
 
       color_rgx = /\[(\d+)m/
-      # scan.pos
-      # log[pos..matched_size]
-      # s.scan_until(/\[\d+m/)
-      # scan.matched_size
       while !scan.eos?
         match = scan.scan_until color_rgx
         match_size = scan.matched_size
@@ -108,5 +103,3 @@ div.grey  { color: #666666; }
     end
   end # class << self
 end # module Flaky
-
-Flaky.write '/tmp/flaky/color.html', File.read('/tmp/flaky/pass/01_ios_specs_nop.rb_pass_1.appium.html.nocolor.txt')
