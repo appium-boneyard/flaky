@@ -30,6 +30,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency 'rake', '~> 10.1.0'
 
-  s.executables = %w(flaky)
+  s.executables = %w(flake)
   s.files = `git ls-files`.split "\n"
 end
