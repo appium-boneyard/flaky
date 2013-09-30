@@ -1,5 +1,6 @@
 # encoding: utf-8
 module Flaky
+  #noinspection RubyResolve
   class Appium
     include POSIX::Spawn
     attr_reader :ready, :pid, :in, :out, :err, :log
@@ -39,11 +40,13 @@ module Flaky
       @log = ''
       self.stop # stop existing process
       self.class.remove_ios_apps
+
       @@thread.exit if @@thread
       @@thread = Thread.new do
         Thread.current.abort_on_exception = true
         self.start.wait
       end
+
       while !self.ready
         sleep 0.5
       end
@@ -80,19 +83,21 @@ module Flaky
       self.class.kill_all 'node'
     end
 
+    # Invoked inside a thread by `self.go`
     def start
       @log = ''
       self.end_all_nodes
       @ready = false
-      cmd = %Q(cd "#{ENV['APPIUM_HOME']}"; node server.js)
+      appium_home = ENV['APPIUM_HOME']
+      raise "ENV['APPIUM_HOME'] must be set!" if appium_home.nil? || appium_home.empty?
+      cmd = %Q(cd "#{appium_home}"; node server.js)
       @pid, @in, @out, @err = popen4 cmd
       @in.close
-      self
+      self # used to chain `start.wait`
     end
 
     def stop
       @log = ''
-      self.end_all_nodes
       # https://github.com/tmm1/pygments.rb/blob/master/lib/pygments/popen.rb
       begin
         Process.kill 'KILL', @pid
@@ -100,6 +105,7 @@ module Flaky
       rescue
       end unless @pid.nil?
       @pid = nil
+      self.end_all_nodes
     end
   end # class Appium
 end # module Flaky

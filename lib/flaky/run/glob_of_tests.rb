@@ -1,5 +1,6 @@
 # encoding: utf-8
 module Flaky
+  # TODO: Rewrite to run without system specific dependencies.
   def self.run_glob_of_tests
     flaky = Flaky::Run.new
 
