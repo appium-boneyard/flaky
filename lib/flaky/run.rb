@@ -110,9 +110,9 @@ module Flaky
       Flaky.write appium_log_name, appium.log
 
       # save uncolored version
-      File.open(appium_log_name + '.nocolor.txt', 'w') do |f|
-        f.write appium.log
-      end
+      # File.open(appium_log_name + '.nocolor.txt', 'w') do |f|
+      #  f.write appium.log
+      # end
 
       passed
     end
