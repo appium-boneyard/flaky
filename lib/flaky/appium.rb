@@ -84,7 +84,7 @@ module Flaky
       @log = ''
       self.end_all_nodes
       @ready = false
-      cmd = 'cd /Users/staffhome/Desktop/appium/appium; node server.js'
+      cmd = %Q(cd "#{ENV['APPIUM_HOME']}"; node server.js)
       @pid, @in, @out, @err = popen4 cmd
       @in.close
       self
@@ -98,7 +98,7 @@ module Flaky
         Process.kill 'KILL', @pid
         Process.waitpid @pid
       rescue
-      end unless @pid
+      end unless @pid.nil?
       @pid = nil
     end
   end # class Appium

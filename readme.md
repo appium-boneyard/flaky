@@ -7,4 +7,9 @@ Run Appium iOS tests to measure flakiness.
 
 Results are stored in `/tmp/flaky`
 
-This only works with Ruby and the directory layout must match [appium_lib iOS](https://github.com/appium/ruby_lib_ios).
+Must set `ENV['APPIUM_HOME']` to point to the appium folder containing `server.js`.
+
+This only works with:
+
+- [Ruby / appium_lib iOS](https://github.com/appium/ruby_lib_ios)
+- iOS iPhone Simulator 6.1
