@@ -36,6 +36,7 @@ module Flaky
       flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
     end
 
+    appium.stop
     flaky.report
   end
 end # module Flaky
