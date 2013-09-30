@@ -16,7 +16,7 @@ This only works with:
 
 --
 
-For each test:
+#### For each test:
 
 - iOS Simulator is closed
 - All `iPhone Simulator/6.1/Applications/*` are removed
