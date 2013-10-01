@@ -1,4 +1,4 @@
-#### flaky [![Gem Version](https://badge.fury.io/rb/flaky.png)](http://rubygems.org/gems/flaky) [![Dependency Status](https://gemnasium.com/appium/flaky.png)](https://gemnasium.com/appium/flaky) 
+#### flaky [![Gem Version](https://badge.fury.io/rb/flaky.png)](http://rubygems.org/gems/flaky) [![Dependency Status](https://gemnasium.com/appium/flaky.png)](https://gemnasium.com/appium/flaky)
 
 Run Appium iOS tests to measure flakiness.
 
@@ -23,3 +23,4 @@ This only works with:
 - Appium server is restarted
 - [spec](https://github.com/bootstraponline/spec) test logs are saved and colored
 - Appium logs are saved and colored
+- iOS Simulator logs are saved `/var/log/system.log`

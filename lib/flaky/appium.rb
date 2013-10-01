@@ -1,9 +1,25 @@
 # encoding: utf-8
 module Flaky
+
+  class Cmd
+    attr_reader :pid, :in, :out, :err
+
+    def initialize cmd
+      @pid, @in, @out, @err = POSIX::Spawn::popen4 cmd
+      @in.close
+    end
+
+    def stop
+      [@in, @out, @err].each { |io| io.close unless io.nil? || io.closed? }
+      Process.kill 'KILL', @pid
+      Process.waitpid @pid
+    end
+  end
+
   #noinspection RubyResolve
   class Appium
     include POSIX::Spawn
-    attr_reader :ready, :pid, :in, :out, :err, :log
+    attr_reader :ready, :pid, :in, :out, :err, :log, :tail
     @@thread = nil
 
     def self.remove_ios_apps
@@ -20,7 +36,7 @@ module Flaky
     end
 
     def self.kill_all process_name
-      _pid, _in, _out, _err =  POSIX::Spawn::popen4('killall', '-9', process_name)
+      _pid, _in, _out, _err = POSIX::Spawn::popen4('killall', '-9', process_name)
       raise "Unable to kill #{process_name}" unless _pid
       _in.close
       _out.read
@@ -34,6 +50,7 @@ module Flaky
       @ready = false
       @pid, @in, @out, @err = nil
       @log = ''
+      @tail = nil
     end
 
     def go
@@ -50,6 +67,8 @@ module Flaky
       while !self.ready
         sleep 0.5
       end
+
+      @tail = Cmd.new 'tail -f /var/log/system.log'
     end
 
     ##
@@ -108,6 +127,8 @@ module Flaky
       end unless @pid.nil?
       @pid = nil
       self.end_all_nodes
+
+      @tail.stop if @tail
     end
   end # class Appium
 end # module Flaky

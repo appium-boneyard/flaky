@@ -106,6 +106,10 @@ module Flaky
       log_name = File.join result_dir, pass_str, log_name
       Flaky.write log_name, log
 
+      log_name = "#{postfix}.server.log.txt"
+      log_name = File.join result_dir, pass_str, log_name
+      Flaky.write log_name, appium.tail.out.readpartial(999_999_999)
+
       appium_log_name = File.join result_dir, pass_str, "#{postfix}.appium.html"
       Flaky.write appium_log_name, appium.log
 
