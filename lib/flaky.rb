@@ -21,6 +21,7 @@ module Flaky
 
   add_to_path __FILE__ # add this dir to path
 
+  # TODO: Use require_relative instead of add_to_path
   # require internal files
   require 'flaky/appium'
   require 'flaky/log'
