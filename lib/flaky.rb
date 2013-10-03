@@ -8,8 +8,8 @@ require 'escape_utils'
 require 'posix/spawn' # http://rubygems.org/gems/posix-spawn
 
 module Flaky
-  VERSION = '0.0.5' unless defined? ::Flaky::VERSION
-  DATE = '2013-09-30' unless defined? ::Flaky::DATE
+  VERSION = '0.0.6' unless defined? ::Flaky::VERSION
+  DATE = '2013-10-03' unless defined? ::Flaky::DATE
 
   # https://github.com/appium/ruby_lib/blob/0e203d76610abd519ba9d2fe9c14b50c94df5bbd/lib/appium_lib.rb#L24
   def self.add_to_path file, path=false
