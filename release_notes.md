@@ -1,3 +1,15 @@
+#### v0.0.6 2013-10-03
+
+- [86d8137](https://github.com/appium/flaky/commit/86d8137e3f1f348be8ee76e42bea0de36280d5a5) Release 0.0.6
+- [0ed637c](https://github.com/appium/flaky/commit/0ed637c213ba59d82fe72a6eb8a22567a9f06a60) Don't escape the iOS simulator logs
+- [6a16eef](https://github.com/appium/flaky/commit/6a16eefde288b68a6695e2e093693c68274fb4f5) Add todo
+- [b8395d7](https://github.com/appium/flaky/commit/b8395d7fc78b75a11a5517f1e6b4c8784522ecee) Save tail of /var/log/system.log
+- [d153c91](https://github.com/appium/flaky/commit/d153c91d072d691d2e499b633f69f10751f8e9bd) Stop appium once we're done
+- [a80dbb1](https://github.com/appium/flaky/commit/a80dbb1062ee11ad53a092c3f3f5a5796d987d84) Update readme.md
+- [6b3ebe8](https://github.com/appium/flaky/commit/6b3ebe8a5ee432206c582f4b0d1e9f877d712ae3) Explain what the gem does
+- [125f960](https://github.com/appium/flaky/commit/125f9608b49a8c939d74699ad3e73f743638bf57) Update links
+
+
 #### v0.0.5 2013-09-30
 
 - [f4c64f7](https://github.com/appium/flaky/commit/f4c64f721f80bc0ce6519ce3f115486cd097d4e0) Release 0.0.5
