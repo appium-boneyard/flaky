@@ -22,5 +22,5 @@ This only works with:
 - All `iPhone Simulator/6.1/Applications/*` are removed
 - Appium server is restarted
 - [spec](https://github.com/bootstraponline/spec) test logs are saved and colored
-- Appium logs are saved and colored
+- [Appium](https://github.com/appium/appium) logs are saved and colored
 - iOS Simulator logs are saved `/var/log/system.log`
