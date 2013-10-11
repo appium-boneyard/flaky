@@ -102,6 +102,10 @@ module Flaky
       self.class.kill_all 'node'
     end
 
+    def end_all_instruments
+      self.class.kill_all 'instruments'
+    end
+
     # Invoked inside a thread by `self.go`
     def launch
       @log = ''
@@ -122,11 +126,11 @@ module Flaky
       # https://github.com/tmm1/pygments.rb/blob/master/lib/pygments/popen.rb
       begin
         Process.kill 'KILL', @pid
-        Process.waitpid @pid
       rescue
       end unless @pid.nil?
       @pid = nil
       self.end_all_nodes
+      self.end_all_instruments
 
       @tail.stop if @tail
     end
