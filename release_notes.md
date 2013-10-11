@@ -1,3 +1,10 @@
+#### v0.0.7 2013-10-11
+
+- [26bc5cc](https://github.com/appium/flaky/commit/26bc5cc6b43e3de7398e6d9e8c9bb615353020eb) Release 0.0.7
+- [9e854aa](https://github.com/appium/flaky/commit/9e854aae8c4b7eb64afc79c3f8716944ea9667ad) Add all tests run option
+- [153119a](https://github.com/appium/flaky/commit/153119a59ba6b8c1d4c2f6d6311aa87f73b1a635) Add link to appium in the readme
+
+
 #### v0.0.6 2013-10-03
 
 - [86d8137](https://github.com/appium/flaky/commit/86d8137e3f1f348be8ee76e42bea0de36280d5a5) Release 0.0.6
