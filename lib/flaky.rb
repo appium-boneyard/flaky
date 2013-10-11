@@ -27,6 +27,6 @@ module Flaky
   require 'flaky/log'
   require 'flaky/run'
 
-  require 'flaky/run/glob_of_tests'
+  require 'flaky/run/all_tests'
   require 'flaky/run/one_test'
 end

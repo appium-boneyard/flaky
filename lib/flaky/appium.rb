@@ -53,7 +53,7 @@ module Flaky
       @tail = nil
     end
 
-    def go
+    def start
       @log = ''
       self.stop # stop existing process
       self.class.remove_ios_apps
@@ -61,7 +61,7 @@ module Flaky
       @@thread.exit if @@thread
       @@thread = Thread.new do
         Thread.current.abort_on_exception = true
-        self.start.wait
+        self.launch.wait
       end
 
       while !self.ready
@@ -103,7 +103,7 @@ module Flaky
     end
 
     # Invoked inside a thread by `self.go`
-    def start
+    def launch
       @log = ''
       self.end_all_nodes
       @ready = false
@@ -114,7 +114,7 @@ module Flaky
       cmd = %Q(cd "#{appium_home}"; node server.js)
       @pid, @in, @out, @err = popen4 cmd
       @in.close
-      self # used to chain `start.wait`
+      self # used to chain `launch.wait`
     end
 
     def stop

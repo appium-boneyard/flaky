@@ -29,9 +29,8 @@ module Flaky
     raise "#{test_file} does not exist." if file.empty?
     test_name = file.sub(current_dir + '/appium/', '').gsub('/', '_')
 
-    puts "Running #{name} #{count}x"
     count.times do
-      appium.go # start appium
+      appium.start
       run_cmd = "cd #{current_dir}; rake ios['#{name}']"
       flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
     end
