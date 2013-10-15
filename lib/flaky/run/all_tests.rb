@@ -24,7 +24,7 @@ module Flaky
 
       count.times do
         appium.start
-        run_cmd = "cd #{current_dir}; rake ios['#{name}']"
+        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
         passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
         break if passed # move onto the next test after one successful run
       end

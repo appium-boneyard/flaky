@@ -31,7 +31,7 @@ module Flaky
 
     count.times do
       appium.start
-      run_cmd = "cd #{current_dir}; rake ios['#{name}']"
+      run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
       flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
     end
 

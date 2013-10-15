@@ -1,7 +1,5 @@
 # encoding: utf-8
 module Flaky
-  require 'digest/md5'
-  require 'posix/spawn'
 
   # Flaky::Android.new.reset
   class Android

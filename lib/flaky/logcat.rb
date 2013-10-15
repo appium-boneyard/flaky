@@ -2,8 +2,6 @@
 # log = Flaky::Logcat.new
 # log.start; log.stop
 module Flaky
-  require 'posix/spawn'
-
   class Logcat
     attr_reader :pid, :in, :out, :err
     @@thread = nil

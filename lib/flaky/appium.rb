@@ -19,7 +19,8 @@ module Flaky
   #noinspection RubyResolve
   class Appium
     include POSIX::Spawn
-    attr_reader :ready, :pid, :in, :out, :err, :log, :tail
+    # logcat is read & stopped by run.execute
+    attr_reader :ready, :pid, :in, :out, :err, :log, :tail, :logcat
     @@thread = nil
 
     def self.remove_ios_apps
@@ -46,17 +47,29 @@ module Flaky
       Process::waitpid(_pid) if _pid
     end
 
-    def initialize
+    # android: true to activate Android mode
+    def initialize opts={}
       @ready = false
       @pid, @in, @out, @err = nil
       @log = ''
       @tail = nil
+      @android = opts.fetch(:android, false)
+      if @android
+        @droid = Flaky::Android.new
+        @logcat = Flaky::Logcat.new
+      end
     end
 
     def start
       @log = ''
       self.stop # stop existing process
-      self.class.remove_ios_apps
+
+      if @android
+        @droid.reset
+        @logcat.start
+      else
+         self.class.remove_ios_apps
+      end
 
       @@thread.exit if @@thread
       @@thread = Thread.new do
@@ -130,7 +143,7 @@ module Flaky
       end unless @pid.nil?
       @pid = nil
       self.end_all_nodes
-      self.end_all_instruments
+      self.end_all_instruments unless @android
 
       @tail.stop if @tail
     end

@@ -14,6 +14,17 @@ module Flaky
     end
   end
 
+  class LogArtifact
+    def initialize opts={}
+      @result_dir = opts.fetch :result_dir, ''
+      @pass_str   = opts.fetch :pass_str, ''
+    end
+
+    def name str
+      File.join @result_dir, @pass_str, str
+    end
+  end
+
   class Run
     include Flaky::Color
     attr_reader :tests, :result_dir, :result_file
@@ -102,24 +113,24 @@ module Flaky
       postfix = "#{runs}_#{test_name}_" + postfix
       postfix = '0' + postfix if runs <= 9
 
-      log_name = "#{postfix}.html"
-      log_name = File.join result_dir, pass_str, log_name
-      Flaky.write log_name, log
 
-      log_name = "#{postfix}.server.log.txt"
-      log_name = File.join result_dir, pass_str, log_name
+      log_file = LogArtifact.new result_dir: result_dir, pass_str: pass_str
 
-      File.open(log_name, 'w') do |f|
+      # html Ruby test log
+      Flaky.write log_file.name("#{postfix}.html"), log
+
+      # iOS simulator system log
+      File.open(log_file.name("#{postfix}.server.log.txt"), 'w') do |f|
         f.write appium.tail.out.readpartial(999_999_999)
       end
 
-      appium_log_name = File.join result_dir, pass_str, "#{postfix}.appium.html"
-      Flaky.write appium_log_name, appium.log
+      # adb logcat log
+      File.open(log_file.name("#{postfix}.logcat.txt"), 'w') do |f|
+        f.write appium.logcat.stop
+      end
 
-      # save uncolored version
-      # File.open(appium_log_name + '.nocolor.txt', 'w') do |f|
-      #  f.write appium.log
-      # end
+      # appium server log
+      Flaky.write log_file.name("#{postfix}.appium.html"), appium.log
 
       passed
     end
