@@ -3,6 +3,7 @@ module Flaky
   require 'digest/md5'
   require 'posix/spawn'
 
+  # Flaky::Android.new.reset
   class Android
     def initialize
       apk_path = ENV['APK_PATH']
@@ -61,5 +62,3 @@ module Flaky
     end
   end
 end
-
-Flaky::Android.new.reset
