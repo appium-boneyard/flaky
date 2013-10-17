@@ -1,3 +1,14 @@
+#### v0.0.8 2013-10-17
+
+- [ed116e9](https://github.com/appium/flaky/commit/ed116e92698360e9e587b27df054888efdcda3d1) Release 0.0.8
+- [9baf904](https://github.com/appium/flaky/commit/9baf9045e8947beb403285e481e05e0bc6b815ee) Update to work on Appium master
+- [f4d5cb9](https://github.com/appium/flaky/commit/f4d5cb9253efb89a11efdcec09c45380987b665c) Enable Android
+- [7482640](https://github.com/appium/flaky/commit/748264071f5486118e0a0cbd5dda44b616ffac0a) Add logcat class
+- [d40eace](https://github.com/appium/flaky/commit/d40eace48b498328e59095a3dc7d99da2fb0a904) Start of reset for Android
+- [6bc2ce8](https://github.com/appium/flaky/commit/6bc2ce83672eb4cdb837985a6c120c964e479db9) End instruments process
+- [92bc979](https://github.com/appium/flaky/commit/92bc97968916dbba6fbe8c256a7c6c9020f76c81) Add run all tests documentation
+
+
 #### v0.0.7 2013-10-11
 
 - [26bc5cc](https://github.com/appium/flaky/commit/26bc5cc6b43e3de7398e6d9e8c9bb615353020eb) Release 0.0.7
