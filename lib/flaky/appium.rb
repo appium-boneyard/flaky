@@ -126,9 +126,9 @@ module Flaky
       @ready = false
       appium_home = ENV['APPIUM_HOME']
       raise "ENV['APPIUM_HOME'] must be set!" if appium_home.nil? || appium_home.empty?
-      contains_appium = File.exists?(File.join(ENV['APPIUM_HOME'], 'server.js'))
-      raise "Appium home `#{appium_home}` doesn't contain server.js!" unless contains_appium
-      cmd = %Q(cd "#{appium_home}"; node server.js)
+      contains_appium = File.exists?(File.join(ENV['APPIUM_HOME'], 'bin', 'appium.js'))
+      raise "Appium home `#{appium_home}` doesn't contain bin/appium.js!" unless contains_appium
+      cmd = %Q(cd "#{appium_home}"; node .)
       @pid, @in, @out, @err = popen4 cmd
       @in.close
       self # used to chain `launch.wait`

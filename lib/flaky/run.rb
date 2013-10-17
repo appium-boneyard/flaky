@@ -125,9 +125,10 @@ module Flaky
       end
 
       # adb logcat log
+      logcat = appium.logcat ? appium.logcat.stop : nil
       File.open(log_file.name("#{postfix}.logcat.txt"), 'w') do |f|
-        f.write appium.logcat.stop
-      end
+        f.write logcat
+      end if logcat
 
       # appium server log
       Flaky.write log_file.name("#{postfix}.appium.html"), appium.log
