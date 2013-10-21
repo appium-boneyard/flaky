@@ -1,3 +1,10 @@
+#### v0.0.9 2013-10-21
+
+- [2e8faf8](https://github.com/appium/flaky/commit/2e8faf8aadf71d61f327e5e587c625345b5a62d6) Release 0.0.9
+- [f03f4b6](https://github.com/appium/flaky/commit/f03f4b65ae80a6b8c528aadd962c07c5460b8790) Failure is 0 success
+- [24ece72](https://github.com/appium/flaky/commit/24ece72fc9554b6dd3eb94823e87694b06fe05af) Store test results in folders
+
+
 #### v0.0.8 2013-10-17
 
 - [ed116e9](https://github.com/appium/flaky/commit/ed116e92698360e9e587b27df054888efdcda3d1) Release 0.0.8
