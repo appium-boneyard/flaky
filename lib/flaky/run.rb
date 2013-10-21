@@ -54,6 +54,8 @@ module Flaky
       puts "\n" * 2
       success = ''
       failure = ''
+      total_success = 0
+      total_failure = 0
       @tests.each do |name, stats|
         runs = stats[:runs]
         pass = stats[:pass]
@@ -62,14 +64,16 @@ module Flaky
             " fail: #{fail}\n"
         if fail > 0 && pass <= 0
           failure += line
+          total_failure += 1
         else
           success += line
+          total_success += 1
         end
       end
 
-      out = ''
-      out += "Failure:\n#{failure}\n" unless failure.empty?
-      out += "Success:\n#{success}" unless success.empty?
+      out = "#{total_success + total_failure} Tests\n\n"
+      out += "Failure (#{total_failure}):\n#{failure}\n" unless failure.empty?
+      out += "Success (#{total_success}):\n#{success}" unless success.empty?
 
       duration = Time.now - @start_time
       duration = ChronicDuration.output(duration.round) || '0s'
