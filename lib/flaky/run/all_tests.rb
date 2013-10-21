@@ -20,7 +20,9 @@ module Flaky
       name = File.basename file, '.*'
 
       raise "#{test_file} does not exist." if file.empty?
-      test_name = file.sub(current_dir + '/appium/', '').gsub('/', '_')
+
+      test_name = file.sub(current_dir + '/appium/', '')
+      test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
         appium.start

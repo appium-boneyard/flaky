@@ -18,10 +18,17 @@ module Flaky
     def initialize opts={}
       @result_dir = opts.fetch :result_dir, ''
       @pass_str   = opts.fetch :pass_str, ''
+      @test_name = opts.fetch :test_name, ''
     end
 
     def name str
-      File.join @result_dir, @pass_str, str
+      file_name = File.basename(str)
+
+      str = str[0..-1-file_name.length].gsub('/', '_')
+      str = str + '_' if str[-1] != '_'
+      str += @test_name.split('/').last
+
+      File.join @result_dir, @pass_str, str, file_name
     end
   end
 
@@ -113,8 +120,7 @@ module Flaky
       postfix = "#{runs}_#{test_name}_" + postfix
       postfix = '0' + postfix if runs <= 9
 
-
-      log_file = LogArtifact.new result_dir: result_dir, pass_str: pass_str
+      log_file = LogArtifact.new result_dir: result_dir, pass_str: pass_str, test_name: test_name
 
       # html Ruby test log
       Flaky.write log_file.name("#{postfix}.html"), log
