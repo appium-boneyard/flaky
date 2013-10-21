@@ -12,7 +12,10 @@ flaky 3 ios
   If one run passes or 3 runs fail, then we move onto the next test.
 MSG
 
-raise usage_string unless ARGV && ARGV.length === 2
+unless ARGV && ARGV.length === 2
+  puts usage_string
+  exit
+end
 
 require File.expand_path '../../lib/flaky', __FILE__
 

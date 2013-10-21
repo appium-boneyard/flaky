@@ -60,7 +60,7 @@ module Flaky
         fail = stats[:fail]
         line = "#{name}, runs: #{runs}, pass: #{pass}," +
             " fail: #{fail}\n"
-        if fail > 0
+        if fail > 0 && pass <= 0
           failure += line
         else
           success += line
