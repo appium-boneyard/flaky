@@ -1,3 +1,10 @@
+#### v0.0.10 2013-11-01
+
+- [2930fad](https://github.com/appium/flaky/commit/2930fad03109ef705837d72e5a2457895974f741) Release 0.0.10
+- [8507820](https://github.com/appium/flaky/commit/850782043bf6f9acdc8b54d91ed2e91050c89b95) Work around OS X auth issue
+- [1ae3727](https://github.com/appium/flaky/commit/1ae3727af3258adab97ec6ef72b6bbbd34360bbb) Add test count
+
+
 #### v0.0.9 2013-10-21
 
 - [2e8faf8](https://github.com/appium/flaky/commit/2e8faf8aadf71d61f327e5e587c625345b5a62d6) Release 0.0.9
