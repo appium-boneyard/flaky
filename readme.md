@@ -17,6 +17,16 @@ This only works with:
 - [Ruby / appium_lib iOS](https://github.com/appium/ruby_lib_ios)
 - iOS iPhone Simulator 6.1
 
+#### Security dialogs
+
+Instruments prompts for security authorization when testing on iOS.
+Set the following environment variables in `~/.bash_profile`.
+
+```
+export FLAKY_USER="username"
+export FLAKY_PASSWORD="password"
+```
+
 --
 
 #### For each test:
