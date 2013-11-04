@@ -22,7 +22,6 @@ module Flaky
     # logcat is read & stopped by run.execute
     attr_reader :ready, :pid, :in, :out, :err, :log, :tail, :logcat
     @@thread = nil
-    @@osascript = nil
 
     def self.remove_ios_apps
       user = ENV['USER']
@@ -58,17 +57,6 @@ module Flaky
       if @android
         @droid = Flaky::Android.new
         @logcat = Flaky::Logcat.new
-      else # dismiss iOS auth dialogs
-        @@osascript = Thread.new do
-          Thread.current.abort_on_exception = true
-          flaky_password = ENV['FLAKY_PASSWORD']
-          raise 'FLAKY_PASSWORD must be defined' if flaky_password.nil? || flaky_password.empty?
-          flaky_user = ENV['FLAKY_USER']
-          raise 'FLAKY_USER must be defined' if flaky_user.nil? || flaky_user.empty?
-
-          script = File.expand_path('../../BeatSecurityAgent.applescript', __FILE__)
-          Cmd.new("/usr/bin/osascript #{script} #{flaky_user} #{flaky_password}")
-        end unless @@osascript
       end
     end
 
@@ -80,7 +68,7 @@ module Flaky
         @droid.reset
         @logcat.start
       else
-        self.class.remove_ios_apps
+         self.class.remove_ios_apps
       end
 
       @@thread.exit if @@thread
