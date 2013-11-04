@@ -28,6 +28,10 @@ export FLAKY_USER="username"
 export FLAKY_PASSWORD="password"
 ```
 
+Ensure that Terminal has been granted permission to control the computer. This is set in Security & Privacy -> Accessibility.
+
+![](doc/accessibility_terminal.jpg)
+
 --
 
 #### For each test:
