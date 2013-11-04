@@ -1,3 +1,13 @@
+#### v0.0.11 2013-11-04
+
+- [017a45f](https://github.com/appium/flaky/commit/017a45ffb32663570c6e6a2f0f7943a143edaf5f) Release 0.0.11
+- [2ec2700](https://github.com/appium/flaky/commit/2ec27002c339ab515edcee607f9959217f44aef8) Fix docs
+- [531709e](https://github.com/appium/flaky/commit/531709e68e676d9642239ef1555ded0ff4447d82) Update readme.md
+- [0b633e0](https://github.com/appium/flaky/commit/0b633e08db8c68e9dad1270235e3bf34bbcba5b7) Update docs
+- [a05118d](https://github.com/appium/flaky/commit/a05118d3f723d79e15fda1dc4e90acbc00273745) Update readme.md
+- [50c5e1e](https://github.com/appium/flaky/commit/50c5e1e4f7fc8d71a0762ae142c95105bed82f34) Update docs
+
+
 #### v0.0.10 2013-11-01
 
 - [2930fad](https://github.com/appium/flaky/commit/2930fad03109ef705837d72e5a2457895974f741) Release 0.0.10
