@@ -1,3 +1,10 @@
+#### v0.0.12 2013-11-04
+
+- [d10c66d](https://github.com/appium/flaky/commit/d10c66dc5a882d54a64fe70709968d856a6a932e) Release 0.0.12
+- [ec86209](https://github.com/appium/flaky/commit/ec862093b64a0319c1f9bc233858e3568acbfcc1) Move applescript to the flake auth command
+- [983998a](https://github.com/appium/flaky/commit/983998a4fdcf5809b24d1c18b2f48ff67c9a70db) Revert "Work around OS X auth issue"
+
+
 #### v0.0.11 2013-11-04
 
 - [017a45f](https://github.com/appium/flaky/commit/017a45ffb32663570c6e6a2f0f7943a143edaf5f) Release 0.0.11
