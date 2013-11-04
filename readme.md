@@ -21,7 +21,7 @@ This only works with:
 
 Instruments prompts for security authorization when testing on iOS.
 Set the following environment variables in `~/.bash_profile`.
-If you don't know your username, type `whoami`.
+If you don't know your username, type `whoami` in the Terminal and use that value.
 
 ```
 export FLAKY_USER="username"
