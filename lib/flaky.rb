@@ -9,8 +9,8 @@ require 'posix/spawn' # http://rubygems.org/gems/posix-spawn
 require 'digest/md5'
 
 module Flaky
-  VERSION = '0.0.10' unless defined? ::Flaky::VERSION
-  DATE = '2013-11-01' unless defined? ::Flaky::DATE
+  VERSION = '0.0.11' unless defined? ::Flaky::VERSION
+  DATE = '2013-11-04' unless defined? ::Flaky::DATE
 
   # https://github.com/appium/ruby_lib/blob/0e203d76610abd519ba9d2fe9c14b50c94df5bbd/lib/appium_lib.rb#L24
   def self.add_to_path file, path=false
