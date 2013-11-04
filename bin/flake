@@ -2,12 +2,12 @@
 # encoding: utf-8
 
 usage_string = <<-'MSG'
-flaky [count] ios[test_name]
+flake [count] ios[test_name]
 
-flaky 1 ios[sign_in]
+flake 1 ios[sign_in]
   Run the sign in test one time
 
-flaky 3 ios
+flake 3 ios
   Run all iOS tests up to 3 times
   If one run passes or 3 runs fail, then we move onto the next test.
 MSG

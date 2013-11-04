@@ -2,11 +2,13 @@
 
 Run Appium iOS tests to measure flakiness.
 
-- `gem install flaky`
+- `gem uninstall -aIx flaky; gem install --no-rdoc --no-ri flaky`
 - `flake 3 ios[nop]` - Run the iOS test named nop 3 times.
 - `flake 3 ios` - Run all the iOS tests up to 3 times.
 If a test passes then it moves onto the next test.
 If a test fails 3 times then it moves onto the next test.
+
+The `flake` command must be run in the directory that contains the `Rakefile`.
 
 Results are stored in `/tmp/flaky`
 
