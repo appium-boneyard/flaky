@@ -34,6 +34,8 @@ Ensure that Terminal has been granted permission to control the computer. This i
 
 ![](doc/accessibility_terminal.jpg)
 
+Run `flake auth` to automatically dismiss security dialogs.
+
 --
 
 #### For each test:

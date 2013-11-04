@@ -25,6 +25,7 @@ module Flaky
   # TODO: Use require_relative instead of add_to_path
   # require internal files
   require 'flaky/appium'
+  require 'flaky/applescript'
   require 'flaky/log'
   require 'flaky/run'
 

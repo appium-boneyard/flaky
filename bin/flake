@@ -12,12 +12,19 @@ flake 3 ios
   If one run passes or 3 runs fail, then we move onto the next test.
 MSG
 
-unless ARGV && ARGV.length === 2
-  puts usage_string
-  exit
+if ARGV && ARGV.length === 1 && ARGV.first === 'auth'
+    require File.expand_path '../../lib/flaky', __FILE__
+    Flaky::AppleScript.beat_security_agent
+    exit
+else
+  unless ARGV && ARGV.length === 2
+    puts usage_string
+    exit
+  end
 end
 
 require File.expand_path '../../lib/flaky', __FILE__
+
 
 # flaky 1 ios[test_name]
 
