@@ -41,7 +41,7 @@ Run `flake auth` to automatically dismiss security dialogs.
 #### For each test:
 
 - iOS Simulator is closed
-- All `iPhone Simulator/6.1/Applications/*` are removed
+- All `/Users/#{user}/Library/Application Support/iPhone Simulator/6.1/Applications/*` are removed
 - Appium server is restarted
 - [spec](https://github.com/bootstraponline/spec) test logs are saved and colored
 - [Appium](https://github.com/appium/appium) logs are saved and colored
