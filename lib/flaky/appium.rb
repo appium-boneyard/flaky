@@ -81,6 +81,11 @@ module Flaky
         sleep 0.5
       end
 
+      # -e = -A = include other user's processes
+      # -a = include your own processes
+      # -x = include processes without a controlling terminal
+      # ps -eax | grep "tail"
+      # http://askubuntu.com/questions/157075/why-does-ps-aux-grep-x-give-better-results-than-pgrep-x
       @tail.stop if @tail
       @tail = Cmd.new 'tail -f /var/log/system.log'
     end
