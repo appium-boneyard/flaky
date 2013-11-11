@@ -81,6 +81,7 @@ module Flaky
         sleep 0.5
       end
 
+      @tail.stop if @tail
       @tail = Cmd.new 'tail -f /var/log/system.log'
     end
 
