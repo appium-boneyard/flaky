@@ -11,8 +11,11 @@ module Flaky
 
     def stop
       [@in, @out, @err].each { |io| io.close unless io.nil? || io.closed? }
-      Process.kill 'KILL', @pid
-      Process.waitpid @pid
+      begin
+        Process.kill 'KILL', @pid
+        Process.waitpid @pid
+      rescue # no such process
+      end
     end
   end
 
@@ -20,7 +23,7 @@ module Flaky
   class Appium
     include POSIX::Spawn
     # logcat is read & stopped by run.execute
-    attr_reader :ready, :pid, :in, :out, :err, :log, :tail, :logcat
+    attr_reader :ready, :pid, :in, :out, :err, :log, :logcat
     @@thread = nil
 
     def self.remove_ios_apps
@@ -52,7 +55,7 @@ module Flaky
       @ready = false
       @pid, @in, @out, @err = nil
       @log = ''
-      @tail = nil
+      @buffer = ''
       @android = opts.fetch(:android, false)
       if @android
         @droid = Flaky::Android.new
@@ -61,14 +64,13 @@ module Flaky
     end
 
     def start
-      @log = ''
       self.stop # stop existing process
-
+      @log = "/tmp/flaky/tmp_log_#{Random.rand(10**4..10**5-1)}"
       if @android
         @droid.reset
         @logcat.start
       else
-         self.class.remove_ios_apps
+        self.class.remove_ios_apps
       end
 
       @@thread.exit if @@thread
@@ -86,8 +88,23 @@ module Flaky
       # -x = include processes without a controlling terminal
       # ps -eax | grep "tail"
       # http://askubuntu.com/questions/157075/why-does-ps-aux-grep-x-give-better-results-than-pgrep-x
-      @tail.stop if @tail
-      @tail = Cmd.new 'tail -f /var/log/system.log'
+    end
+
+    def update_buffer data
+      @buffer += data
+
+      if @buffer.length >= 32_000
+        self.flush_buffer
+      end
+    end
+
+    def flush_buffer
+      return if @buffer.nil? || @buffer.empty?
+      File.open(@log, 'a') do |f|
+        f.write EscapeUtils.escape_html @buffer
+      end
+      @buffer = ''
+      @log
     end
 
     ##
@@ -106,7 +123,7 @@ module Flaky
         ready_for_reading.each do |stream|
           begin
             capture = stream.readpartial 999_999
-            @log += capture if capture
+            update_buffer(capture) if capture
             @ready = true if !@ready && capture.include?('Appium REST http interface listener started')
           rescue EOFError
             out_err.delete stream
@@ -127,7 +144,6 @@ module Flaky
 
     # Invoked inside a thread by `self.go`
     def launch
-      @log = ''
       self.end_all_nodes
       @ready = false
       appium_home = ENV['APPIUM_HOME']
@@ -141,7 +157,6 @@ module Flaky
     end
 
     def stop
-      @log = ''
       # https://github.com/tmm1/pygments.rb/blob/master/lib/pygments/popen.rb
       begin
         Process.kill 'KILL', @pid
@@ -150,8 +165,6 @@ module Flaky
       @pid = nil
       self.end_all_nodes
       self.end_all_instruments unless @android
-
-      @tail.stop if @tail
     end
   end # class Appium
 end # module Flaky

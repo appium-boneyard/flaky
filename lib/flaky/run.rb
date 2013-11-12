@@ -129,10 +129,10 @@ module Flaky
       # html Ruby test log
       Flaky.write log_file.name("#{postfix}.html"), log
 
-      # iOS simulator system log
-      File.open(log_file.name("#{postfix}.server.log.txt"), 'w') do |f|
-        f.write appium.tail.out.readpartial(999_999_999)
-      end
+      # TODO: Get iOS simulator system log from appium
+      # File.open(log_file.name("#{postfix}.server.log.txt"), 'w') do |f|
+      #  f.write appium.tail.out.readpartial(999_999_999)
+      # end
 
       # adb logcat log
       logcat = appium.logcat ? appium.logcat.stop : nil
@@ -141,7 +141,7 @@ module Flaky
       end if logcat
 
       # appium server log
-      Flaky.write log_file.name("#{postfix}.appium.html"), appium.log
+      Flaky.write log_file.name("#{postfix}.appium.html"), nil, appium.flush_buffer
 
       passed
     end

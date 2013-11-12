@@ -47,18 +47,19 @@ div.grey  { color: #666666; }
       HTML
     end
 
-    def write log_file, log
+    def write log_file, log, file_path=nil
       # directory must exist
       FileUtils.mkdir_p File.dirname log_file
       # Pry & Awesome Print use the ruby objects to insert term colors.
       # this can't be done with the raw text output.
 
       # must escape for rendering HTML in the browser
-      log = EscapeUtils.escape_html log
+      log = EscapeUtils.escape_html log unless file_path
 
       # [90mPOST /wd/hub/session [36m303 [90m6877ms - 9[0m
 
-      scan = StringScanner.new log
+      scan = StringScanner.new log || File.read(file_path)
+      File.delete(file_path) if file_path # delete tmp buffer file
 
       new_log = '<div>'
 
@@ -78,21 +79,21 @@ div.grey  { color: #666666; }
         new_log += match[0..-1 - match_size]
         new_log += '</div>'
 
-        found_number = match.match(color_rgx).to_a.last.gsub(/[^\d]/,'').to_i
+        found_number = match.match(color_rgx).to_a.last.gsub(/[^\d]/, '').to_i
 
         # now make a new colored div
-        color = case(found_number)
-          when 39, 0 # white text
-            '<div>'
-          when 90 # grey
-            '<div class="grey">'
-          when 36
-            '<div class="cyan">'
-          when 32
-            '<div class="green">'
-          else
-            '<div>' # Unknown color code
-          end
+        color = case (found_number)
+                  when 39, 0 # white text
+                    '<div>'
+                  when 90 # grey
+                    '<div class="grey">'
+                  when 36
+                    '<div class="cyan">'
+                  when 32
+                    '<div class="green">'
+                  else
+                    '<div>' # Unknown color code
+                end
 
         new_log += color
       end
