@@ -1,3 +1,15 @@
+#### v0.0.13 2013-11-12
+
+- [33fdc42](https://github.com/appium/flaky/commit/33fdc424ccf7534c13897a7c5bc1d6e7991bfa4e) Release 0.0.13
+- [201ad79](https://github.com/appium/flaky/commit/201ad790dfde1abfe7984b74812346c0d058d3e0) Buffer the appium server log
+- [d86560b](https://github.com/appium/flaky/commit/d86560b00a8c718c92c94fea10b43b11663720a2) Add note on checking for process existance
+- [5f90fb2](https://github.com/appium/flaky/commit/5f90fb230dd36e85eb93fa0420689ab8a0ccffc8) Stop tail before starting a new one
+- [3d9c392](https://github.com/appium/flaky/commit/3d9c392e8fb231f48513f8883c22d36aa66857db) Update to new escape_utils
+- [771a57b](https://github.com/appium/flaky/commit/771a57b9ca2dce6f38bfcb5c3df31b31fa24cd90) Update readme.md
+- [e1bcde7](https://github.com/appium/flaky/commit/e1bcde7048a40586d618e6195cbfea98b636a518) Fix iOS app removal to work on all iPhone Simulators
+- [66d8f55](https://github.com/appium/flaky/commit/66d8f5570622a85200587689ed699e603dd106bb) Update readme.md
+
+
 #### v0.0.12 2013-11-04
 
 - [d10c66d](https://github.com/appium/flaky/commit/d10c66dc5a882d54a64fe70709968d856a6a932e) Release 0.0.12
