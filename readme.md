@@ -45,4 +45,3 @@ Run `flake auth` to automatically dismiss security dialogs.
 - Appium server is restarted
 - [spec](https://github.com/bootstraponline/spec) test logs are saved and colored
 - [Appium](https://github.com/appium/appium) logs are saved and colored
-- iOS Simulator logs are saved `/var/log/system.log`
