@@ -53,9 +53,9 @@ div.grey  { color: #666666; }
       # Pry & Awesome Print use the ruby objects to insert term colors.
       # this can't be done with the raw text output.
 
+      # escape_html will error if called when log is nil
       # must escape for rendering HTML in the browser
-      log = EscapeUtils.escape_html log unless file_path
-
+      log = EscapeUtils.escape_html log || '' unless file_path
       # [90mPOST /wd/hub/session [36m303 [90m6877ms - 9[0m
 
       scan = StringScanner.new log || File.read(file_path)
