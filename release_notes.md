@@ -1,3 +1,9 @@
+#### v0.0.14 2013-11-22
+
+- [6f21c6f](https://github.com/appium/flaky/commit/6f21c6fb899628a41e5e98e2a837e376222edf5c) Release 0.0.14
+- [0cf4855](https://github.com/appium/flaky/commit/0cf485536c066b85951f3ed4317ad593db8c3bf6) Fix crash on nil log
+
+
 #### v0.0.13 2013-11-12
 
 - [33fdc42](https://github.com/appium/flaky/commit/33fdc424ccf7534c13897a7c5bc1d6e7991bfa4e) Release 0.0.13
