@@ -30,5 +30,6 @@ module Flaky
   require 'flaky/run'
 
   require 'flaky/run/all_tests'
+  require 'flaky/run/from_file'
   require 'flaky/run/one_test'
 end

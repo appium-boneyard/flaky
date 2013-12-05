@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-
+require File.expand_path '../../lib/flaky', __FILE__
 usage_string = <<-'MSG'
 flake [count] ios[test_name]
 
@@ -10,12 +10,24 @@ flake 1 ios[sign_in]
 flake 3 ios
   Run all iOS tests up to 3 times
   If one run passes or 3 runs fail, then we move onto the next test.
+
+flake 3 ios files.txt
+  Run select iOS tests in files.txt up to 3 times
+  If one run passes or 3 runs fail, then we move onto the next test.
 MSG
 
 if ARGV && ARGV.length === 1 && ARGV.first === 'auth'
-    require File.expand_path '../../lib/flaky', __FILE__
     Flaky::AppleScript.beat_security_agent
     exit
+elsif ARGV && ARGV.length === 3
+  # rake 3 ios files.txt
+  count = ARGV.first
+  os = ARGV[1]
+  file = ARGV.last
+  raise 'File must end in .txt' unless File.extname(ARGV.last).downcase == '.txt'
+  puts "Running select #{os} tests from file #{file} #{count}x"
+  Flaky.run_from_file count: count, os: os, file: file
+  exit
 else
   unless ARGV && ARGV.length === 2
     puts usage_string
@@ -30,8 +42,9 @@ require File.expand_path '../../lib/flaky', __FILE__
 
 count = ARGV.first
 
-single_test_match = ARGV.last.match(/(.+)\[(.*)\]$/)
-all_tests_match = ARGV.last.match(/(.+)$/)
+last = ARGV.last
+single_test_match = last.match(/(.+)\[(.*)\]$/)
+all_tests_match = last.match(/(.+)$/)
 
 if single_test_match
   # we're not using full, however we have to capture it anyway.
@@ -39,10 +52,12 @@ if single_test_match
   name = File.basename test_name, '.*'
   puts "Running #{name} #{count}x"
   Flaky.run_one_test count: count, os: os, name: test_name
+  exit
 elsif all_tests_match
   os = all_tests_match.to_a.last
   puts "Running all #{os} tests #{count}x"
   Flaky.run_all_tests count: count, os: os
+  exit
 else
   puts usage_string
   exit
