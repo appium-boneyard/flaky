@@ -8,3 +8,11 @@
 ```ruby
  lines.split("\n").each { |l| puts File.basename(l.split(',').first) }; nil
 ```
+
+- Aggregate common errors
+
+```ruby
+Dir.glob('/tmp/flaky/fail/**/*') { |f| puts f if File.file?(f) && File.readlines(f).to_s.include?('Object.afterWrite') }
+
+Dir.glob('/tmp/flaky/fail/**/*') { |f| puts f if File.file?(f) && File.readlines(f).to_s.include?('target application appears to have died') }
+```
