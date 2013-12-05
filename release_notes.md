@@ -1,3 +1,11 @@
+#### v0.0.15 2013-12-05
+
+- [5397189](https://github.com/appium/flaky/commit/539718980a1c1578da63c30f773e5c249415b2b9) Release 0.0.15
+- [62aa23a](https://github.com/appium/flaky/commit/62aa23a99d3e18c39bc47c0a3075f803aabc7d1b) Update readme.md
+- [c6b5e9c](https://github.com/appium/flaky/commit/c6b5e9cda34d76d4edf149eb90c7776a4cf23b2c) Add run from file option
+- [37ed2c8](https://github.com/appium/flaky/commit/37ed2c89b78449f0c91b5582551f11de94435b83) Update todo.md
+
+
 #### v0.0.14 2013-11-22
 
 - [6f21c6f](https://github.com/appium/flaky/commit/6f21c6fb899628a41e5e98e2a837e376222edf5c) Release 0.0.14
