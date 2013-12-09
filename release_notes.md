@@ -1,3 +1,10 @@
+#### v0.0.16 2013-12-09
+
+- [fed719a](https://github.com/appium/flaky/commit/fed719af184a6f38a4d29b3c65f1906d6917c1fb) Release 0.0.16
+- [4aa7711](https://github.com/appium/flaky/commit/4aa7711b206a71338fc8d771c5ef49ec036f1ab8) Fix file exists error. Write current test to current.txt
+- [1b0589c](https://github.com/appium/flaky/commit/1b0589c232219b5c535432976056a6d5c30ed073) Update todo.md
+
+
 #### v0.0.15 2013-12-05
 
 - [5397189](https://github.com/appium/flaky/commit/539718980a1c1578da63c30f773e5c249415b2b9) Release 0.0.15
