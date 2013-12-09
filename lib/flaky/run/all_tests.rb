@@ -25,6 +25,7 @@ module Flaky
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
+        File.open('/tmp/flaky/current.txt', 'a') { |f| f.puts "Running: #{test_name} on #{os}" }
         appium.start
         run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
         passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
