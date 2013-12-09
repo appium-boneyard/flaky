@@ -23,7 +23,7 @@ module Flaky
   class Appium
     include POSIX::Spawn
     # logcat is read & stopped by run.execute
-    attr_reader :ready, :pid, :in, :out, :err, :log, :logcat
+    attr_reader :ready, :pid, :in, :out, :err, :log, :logcat, :ios, :android
     @@thread = nil
 
     def self.remove_ios_apps
@@ -61,6 +61,7 @@ module Flaky
         @droid = Flaky::Android.new
         @logcat = Flaky::Logcat.new
       end
+      @ios = ! @android
     end
 
     def start

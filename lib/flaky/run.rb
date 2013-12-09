@@ -146,10 +146,22 @@ module Flaky
       passed
     end
 
+    def collect_crashes array
+      Dir.glob(File.join(Dir.home, '/Library/Logs/DiagnosticReports/*.crash')) do |crash|
+        array << crash
+      end
+      array
+    end
+
     def execute opts={}
       run_cmd = opts[:run_cmd]
       test_name = opts[:test_name]
       appium = opts[:appium]
+
+      old_crash_files = []
+      if appium.ios
+        collect_crashes old_crash_files
+      end
 
       raise 'must pass :run_cmd' unless run_cmd
       raise 'must pass :test_name' unless test_name
@@ -164,6 +176,21 @@ module Flaky
           @last_test != test_name
 
       print passed ? green(' ✓') : red(' ✖')
+
+      if appium.ios
+        new_crash_files = []
+        collect_crashes new_crash_files
+
+        new_crash_files = new_crash_files - old_crash_files
+        if new_crash_files.length > 0
+          File.open('/tmp/flaky/crashes.txt', 'a') do |f|
+            f.puts '--'
+            f.puts "Test: #{test_name} crashed on iOS:"
+            new_crash_files.each { |crash| f.puts crash }
+            f.puts '--'
+          end
+        end
+      end
 
       @last_test = test_name
       passed
