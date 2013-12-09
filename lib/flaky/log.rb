@@ -47,7 +47,7 @@ div.grey  { color: #666666; }
       HTML
     end
 
-    def write log_file, log, file_path=nil
+    def _scan log_file, log, file_path=nil
       # directory must exist
       FileUtils.mkdir_p File.dirname log_file
       # Pry & Awesome Print use the ruby objects to insert term colors.
@@ -55,7 +55,7 @@ div.grey  { color: #666666; }
 
       # escape_html will error if called when log is nil
       # must escape for rendering HTML in the browser
-      log = EscapeUtils.escape_html log || '' unless file_path
+      log = log || '' unless file_path
       # [90mPOST /wd/hub/session [36m303 [90m6877ms - 9[0m
 
       scan = StringScanner.new log || File.read(file_path)
@@ -96,6 +96,21 @@ div.grey  { color: #666666; }
                 end
 
         new_log += color
+      end
+
+      new_log
+    end
+
+    def write log_file, log, file_path=nil
+      new_log = ''
+
+      begin
+        Timeout::timeout(60) do
+          new_log = _scan log_file, log, file_path=nil
+        end
+      rescue
+        new_log = log
+        new_log = new_log || File.read(file_path) if File.exists? file_path
       end
 
       File.open(log_file, 'w') do |f|

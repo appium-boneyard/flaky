@@ -102,7 +102,7 @@ module Flaky
     def flush_buffer
       return if @buffer.nil? || @buffer.empty?
       File.open(@log, 'a') do |f|
-        f.write EscapeUtils.escape_html @buffer
+        f.write @buffer
       end
       @buffer = ''
       @log

@@ -1,10 +1,10 @@
 # encoding: utf-8
 require 'fileutils' # system requires
 require 'open3'
+require 'timeout' # to timeout long running color runs
 
 require 'rubygems' # gem requires
 require 'chronic_duration'
-require 'escape_utils'
 require 'posix/spawn' # http://rubygems.org/gems/posix-spawn
 require 'digest/md5'
 
