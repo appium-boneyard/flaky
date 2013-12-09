@@ -110,7 +110,8 @@ div.grey  { color: #666666; }
         end
       rescue
         new_log = log
-        new_log = new_log || File.read(file_path) if File.exists? file_path
+        # File.exists?(nil) will error
+        new_log = new_log || File.read(file_path) if file_path && File.exists?(file_path)
       end
 
       File.open(log_file, 'w') do |f|
