@@ -26,7 +26,6 @@ module Flaky
   # require internal files
   require 'flaky/appium'
   require 'flaky/applescript'
-  require 'flaky/log'
   require 'flaky/run'
 
   require 'flaky/run/all_tests'

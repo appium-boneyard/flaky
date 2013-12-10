@@ -126,8 +126,13 @@ module Flaky
 
       log_file = LogArtifact.new result_dir: result_dir, pass_str: pass_str, test_name: test_name
 
+      # File.open 'w' will not create folders. Use mkdir_p before.
+      test_file_path = log_file.name("#{postfix}.html")
+      FileUtils.mkdir_p File.dirname(test_file_path)
       # html Ruby test log
-      Flaky.write log_file.name("#{postfix}.html"), log
+      File.open(test_file_path, 'w') do |f|
+        f.write log
+      end
 
       # TODO: Get iOS simulator system log from appium
       # File.open(log_file.name("#{postfix}.server.log.txt"), 'w') do |f|
@@ -136,12 +141,24 @@ module Flaky
 
       # adb logcat log
       logcat = appium.logcat ? appium.logcat.stop : nil
-      File.open(log_file.name("#{postfix}.logcat.txt"), 'w') do |f|
+      logcat_file_path = log_file.name("#{postfix}.logcat.txt")
+      FileUtils.mkdir_p File.dirname(logcat_file_path)
+      File.open(logcat_file_path, 'w') do |f|
         f.write logcat
       end if logcat
 
       # appium server log
-      Flaky.write log_file.name("#{postfix}.appium.html"), nil, appium.flush_buffer
+      appium_server_path = log_file.name("#{postfix}.appium.html")
+      FileUtils.mkdir_p File.dirname(appium_server_path)
+      File.open(appium_server_path, 'w') do |f|
+        # this may return nil
+        tmp_file = appium.flush_buffer
+
+        if !tmp_file.nil? && !tmp_file.empty?
+          f.write File.read tmp_file
+          File.delete tmp_file
+        end
+      end
 
       passed
     end
