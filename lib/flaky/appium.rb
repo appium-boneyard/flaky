@@ -100,12 +100,12 @@ module Flaky
     end
 
     def flush_buffer
-      return if @buffer.nil? || @buffer.empty?
+      return '' if @buffer.nil? || @buffer.empty?
       File.open(@log, 'a') do |f|
         f.write @buffer
       end
       @buffer = ''
-      @log
+      @log || ''
     end
 
     ##
