@@ -1,3 +1,12 @@
+#### v0.0.17 2013-12-10
+
+- [64078c1](https://github.com/appium/flaky/commit/64078c1ed2ee8a96a52f05aefb460216b48ea2b5) Release 0.0.17
+- [208c9bb](https://github.com/appium/flaky/commit/208c9bbbeb17f2a70965cd530c3f5ee8d9a32369) Disable coloring
+- [bf30e8e](https://github.com/appium/flaky/commit/bf30e8ed918a184f34ba316f472e5c0bfe9c0bb1) Fix nil error
+- [b19f9e5](https://github.com/appium/flaky/commit/b19f9e548bcc40f70b232ac2225b7c71abd01415) Don't escape appium log. Timeout after 60s of color
+- [a4a569f](https://github.com/appium/flaky/commit/a4a569fbaebdce9683d8294afae61ff7712a0e92) Record crashes per test in crashes.txt
+
+
 #### v0.0.16 2013-12-09
 
 - [fed719a](https://github.com/appium/flaky/commit/fed719af184a6f38a4d29b3c65f1906d6917c1fb) Release 0.0.16
