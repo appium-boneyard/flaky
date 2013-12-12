@@ -179,7 +179,8 @@ module Flaky
       sauce = opts[:sauce]
 
       old_crash_files = []
-      if appium.ios && !sauce
+      # appium is nil when on sauce
+      if !sauce && appium && appium.ios
         collect_crashes old_crash_files
       end
 
