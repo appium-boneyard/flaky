@@ -14,8 +14,9 @@ module Flaky
     # ensure file name does not contain an extension
     name = File.basename name, '.*'
 
+    running_on_sauce = ENV['SAUCE_USERNAME'] ? true : false
     flaky = Flaky::Run.new
-    appium = Appium.new
+    appium = Appium.new unless running_on_sauce
 
     current_dir = Dir.pwd
 
@@ -32,12 +33,12 @@ module Flaky
     test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
     count.times do
-      appium.start
+      appium.start unless running_on_sauce
       run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
-      flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
+      flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce
     end
 
-    appium.stop
+    appium.stop unless running_on_sauce
     flaky.report
   end
 end # module Flaky

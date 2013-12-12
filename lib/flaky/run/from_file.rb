@@ -30,8 +30,9 @@ module Flaky
       raise "Missing tests #{missing_tests}"
     end
 
+    running_on_sauce = ENV['SAUCE_USERNAME'] ? true : false
     flaky = Flaky::Run.new
-    appium = Appium.new
+    appium = Appium.new unless running_on_sauce
 
     raise "Rakefile doesn't exist in #{current_dir}" unless File.exists?(File.join(current_dir, 'Rakefile'))
 
@@ -45,14 +46,14 @@ module Flaky
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
-        appium.start
+        appium.start unless running_on_sauce
         run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
-        passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
+        passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce
         break if passed # move onto the next test after one successful run
       end
     end
 
-    appium.stop
+    appium.stop unless running_on_sauce
     flaky.report
   end
 end # module Flaky
