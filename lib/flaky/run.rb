@@ -199,7 +199,8 @@ module Flaky
 
       print passed ? green(' ✓') : red(' ✖')
 
-      if appium.ios && !sauce
+      # appium is nil when running on Sauce
+      if !sauce && appium && appium.ios
         new_crash_files = []
         collect_crashes new_crash_files
 
