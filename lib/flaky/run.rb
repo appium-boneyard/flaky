@@ -87,7 +87,7 @@ module Flaky
       puts out
     end
 
-    def _execute run_cmd, test_name, runs, appium
+    def _execute run_cmd, test_name, runs, appium, sauce
       # must capture exit code or log is an array.
       log, exit_code = Open3.capture2e run_cmd
 
@@ -139,24 +139,26 @@ module Flaky
       #  f.write appium.tail.out.readpartial(999_999_999)
       # end
 
-      # adb logcat log
-      logcat = appium.logcat ? appium.logcat.stop : nil
-      logcat_file_path = log_file.name("#{postfix}.logcat.txt")
-      FileUtils.mkdir_p File.dirname(logcat_file_path)
-      File.open(logcat_file_path, 'w') do |f|
-        f.write logcat
-      end if logcat
+      unless sauce
+        # adb logcat log
+        logcat = appium.logcat ? appium.logcat.stop : nil
+        logcat_file_path = log_file.name("#{postfix}.logcat.txt")
+        FileUtils.mkdir_p File.dirname(logcat_file_path)
+        File.open(logcat_file_path, 'w') do |f|
+          f.write logcat
+        end if logcat
 
-      # appium server log
-      appium_server_path = log_file.name("#{postfix}.appium.html")
-      FileUtils.mkdir_p File.dirname(appium_server_path)
-      File.open(appium_server_path, 'w') do |f|
-        # this may return nil
-        tmp_file = appium.flush_buffer
+        # appium server log
+        appium_server_path = log_file.name("#{postfix}.appium.html")
+        FileUtils.mkdir_p File.dirname(appium_server_path)
+        File.open(appium_server_path, 'w') do |f|
+          # this may return nil
+          tmp_file = appium.flush_buffer
 
-        if !tmp_file.nil? && !tmp_file.empty?
-          f.write File.read tmp_file
-          File.delete tmp_file
+          if !tmp_file.nil? && !tmp_file.empty?
+            f.write File.read tmp_file
+            File.delete tmp_file
+          end
         end
       end
 
@@ -174,9 +176,10 @@ module Flaky
       run_cmd = opts[:run_cmd]
       test_name = opts[:test_name]
       appium = opts[:appium]
+      sauce = opts[:sauce]
 
       old_crash_files = []
-      if appium.ios
+      if appium.ios && !sauce
         collect_crashes old_crash_files
       end
 
@@ -187,14 +190,14 @@ module Flaky
       test = @tests[test_name] ||= {runs: 0, pass: 0, fail: 0}
       runs = test[:runs] += 1
 
-      passed = _execute run_cmd, test_name, runs, appium
+      passed = _execute run_cmd, test_name, runs, appium, sauce
 
       print cyan("\n #{test_name} ") if @last_test.nil? ||
           @last_test != test_name
 
       print passed ? green(' ✓') : red(' ✖')
 
-      if appium.ios
+      if appium.ios && !sauce
         new_crash_files = []
         collect_crashes new_crash_files
 

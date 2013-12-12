@@ -9,8 +9,9 @@ module Flaky
     raise ':count must be an int' unless count.kind_of?(Integer)
     raise ':os must be a string' unless os.kind_of?(String)
 
+    running_on_sauce = ENV['SAUCE_USERNAME'] ? true : false
     flaky = Flaky::Run.new
-    appium = Appium.new
+    appium = Appium.new unless running_on_sauce
 
     current_dir = Dir.pwd
     raise "Rakefile doesn't exist in #{current_dir}" unless File.exists?(File.join(current_dir, 'Rakefile'))
@@ -26,14 +27,14 @@ module Flaky
 
       count.times do
         File.open('/tmp/flaky/current.txt', 'a') { |f| f.puts "Running: #{test_name} on #{os}" }
-        appium.start
+        appium.start unless running_on_sauce
         run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
-        passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium
+        passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce
         break if passed # move onto the next test after one successful run
       end
     end
 
-    appium.stop
+    appium.stop unless running_on_sauce
     flaky.report
   end
 end # module Flaky
