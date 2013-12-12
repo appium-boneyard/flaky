@@ -186,7 +186,8 @@ module Flaky
 
       raise 'must pass :run_cmd' unless run_cmd
       raise 'must pass :test_name' unless test_name
-      raise 'must pass :appium' unless appium
+      # local appium is not required when running on Sauce
+      raise 'must pass :appium' unless appium || sauce
 
       test = @tests[test_name] ||= {runs: 0, pass: 0, fail: 0}
       runs = test[:runs] += 1
