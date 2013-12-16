@@ -201,7 +201,7 @@ module Flaky
       else
         print cyan("\n #{test_name} ")
         print passed ? green(' ✓') : red(' ✖')
-        print "https://saucelabs.com/tests/#{File.read('/tmp/appium_lib_session').chomp}\n"
+        print " https://saucelabs.com/tests/#{File.read('/tmp/appium_lib_session').chomp}\n"
       end
 
       # appium is nil when running on Sauce
