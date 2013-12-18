@@ -33,9 +33,13 @@ module Flaky
       # Must kill iPhone simulator or strange install errors will occur.
       self.kill_all 'iPhone Simulator'
 
-      app_glob = "/Users/#{user}/Library/Application Support/iPhone Simulator/**/Applications/*"
+      app_glob = "/Users/#{user}/Library/Application Support/iPhone Simulator/**/Applications"
       Dir.glob(app_glob) do |ios_app_folder|
         FileUtils.rm_rf ios_app_folder
+        root = File.dirname ios_app_folder
+        FileUtils.rm_rf File.join(root, 'Library/TCC')
+        FileUtils.rm_rf File.join(root, 'Library/Caches')
+        FileUtils.rm_rf File.join(root, 'Library/Media')
       end
     end
 
