@@ -1,3 +1,9 @@
+#### v0.0.19 2013-12-23
+
+- [25630f1](https://github.com/appium/flaky/commit/25630f1d536715db8539c2d96adba15f5b35d5e4) Release 0.0.19
+- [7006405](https://github.com/appium/flaky/commit/70064050daec3d94608063edad94e37a0066d4c5) Save failed test names to fail.txt
+
+
 #### v0.0.18 2013-12-23
 
 - [2843ce6](https://github.com/appium/flaky/commit/2843ce61c0e9dd6f0cebac2e2ab1486044f4ec57) Release 0.0.18
