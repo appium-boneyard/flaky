@@ -28,7 +28,9 @@ module Flaky
       str = str + '_' if str[-1] != '_'
       str += @test_name.split('/').last
 
-      File.join @result_dir, @pass_str, str, file_name
+      filename_only = File.basename(@test_name)
+
+      File.join @result_dir, @pass_str, filename_only, str, file_name
     end
   end
 
@@ -140,13 +142,14 @@ module Flaky
       # end
 
       unless sauce
-        # adb logcat log
-        logcat = appium.logcat ? appium.logcat.stop : nil
-        logcat_file_path = log_file.name("#{postfix}.logcat.txt")
-        FileUtils.mkdir_p File.dirname(logcat_file_path)
-        File.open(logcat_file_path, 'w') do |f|
-          f.write logcat
-        end if logcat
+        src_system_log = '/tmp/flaky_logs.txt'
+        if File.exists? src_system_log
+          # postfix is required! or the log will be saved to an incorrect path
+          system_log_path = log_file.name("#{postfix}.system.txt")
+          FileUtils.mkdir_p File.dirname(system_log_path)
+          FileUtils.copy_file src_system_log, system_log_path
+          File.delete src_system_log
+        end
 
         # appium server log
         appium_server_path = log_file.name("#{postfix}.appium.html")
@@ -155,6 +158,7 @@ module Flaky
           # this may return nil
           tmp_file = appium.flush_buffer
 
+          # todo: copy file instead of read & delete
           if !tmp_file.nil? && !tmp_file.empty?
             f.write File.read tmp_file
             File.delete tmp_file

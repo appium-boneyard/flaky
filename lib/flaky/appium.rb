@@ -22,8 +22,7 @@ module Flaky
   #noinspection RubyResolve
   class Appium
     include POSIX::Spawn
-    # logcat is read & stopped by run.execute
-    attr_reader :ready, :pid, :in, :out, :err, :log, :logcat, :ios, :android
+    attr_reader :ready, :pid, :in, :out, :err, :log, :ios, :android
     @@thread = nil
 
     def self.remove_ios_apps
@@ -63,7 +62,6 @@ module Flaky
       @android = opts.fetch(:android, false)
       if @android
         @droid = Flaky::Android.new
-        @logcat = Flaky::Logcat.new
       end
       @ios = ! @android
     end
@@ -73,7 +71,6 @@ module Flaky
       @log = "/tmp/flaky/tmp_log_#{Random.rand(10**4..10**5-1)}"
       if @android
         @droid.reset
-        @logcat.start
       else
         self.class.remove_ios_apps
       end
