@@ -1,3 +1,18 @@
+#### v0.0.18 2013-12-23
+
+- [2843ce6](https://github.com/appium/flaky/commit/2843ce61c0e9dd6f0cebac2e2ab1486044f4ec57) Release 0.0.18
+- [83523b0](https://github.com/appium/flaky/commit/83523b010d480f37f36b83db2ba9c09516126150) Pull in system logs from /tmp/flaky_logs.txt
+- [3d6a17d](https://github.com/appium/flaky/commit/3d6a17df86a92e2b6e138796b48554f84597ec6a) Improve Simulator clean up
+- [0107484](https://github.com/appium/flaky/commit/01074843ed129cc1693f6a82957fe392ff5d9183) Add space
+- [5a7ba98](https://github.com/appium/flaky/commit/5a7ba988dfd42341680ac2380c9125c38ed37438) Detect Sauce & appium_lib :export_session
+- [e82eeac](https://github.com/appium/flaky/commit/e82eeac727b98485d4bcc77eb4be4af44e502cb9) Fix another Sauce crash
+- [b9a43e4](https://github.com/appium/flaky/commit/b9a43e4e46c16be86a0a612367cfbb6555ad2f48) Fix another sauce crash
+- [53daec2](https://github.com/appium/flaky/commit/53daec203399e529d76e1ed8cf7ff51b646169da) Fix Sauce crash
+- [3cc9425](https://github.com/appium/flaky/commit/3cc9425f188b0023d3c58aa911a18e12db5ee48a) More Sauce updates
+- [9cefd1e](https://github.com/appium/flaky/commit/9cefd1e9c0229f08d029a5fac7672cf4ac0ad00b) Support running on Sauce
+- [2b90cef](https://github.com/appium/flaky/commit/2b90cef5f3ec933c93c8bb675bd7987238d1fccc) Try not to return nil
+
+
 #### v0.0.17 2013-12-10
 
 - [64078c1](https://github.com/appium/flaky/commit/64078c1ed2ee8a96a52f05aefb460216b48ea2b5) Release 0.0.17
