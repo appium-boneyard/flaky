@@ -49,6 +49,7 @@ module Flaky
 
       @result_dir = result_dir
       @result_file = File.join result_dir, 'result.txt'
+      @fail_file = File.join result_dir, 'fail.txt'
     end
 
     def report opts={}
@@ -56,6 +57,7 @@ module Flaky
       puts "\n" * 2
       success = ''
       failure = ''
+      failure_name_only = ''
       total_success = 0
       total_failure = 0
       @tests.each do |name, stats|
@@ -65,6 +67,7 @@ module Flaky
         line = "#{name}, runs: #{runs}, pass: #{pass}," +
             " fail: #{fail}\n"
         if fail > 0 && pass <= 0
+          failure_name_only += "#{File.basename(name)}\n"
           failure += line
           total_failure += 1
         else
@@ -81,10 +84,16 @@ module Flaky
       duration = ChronicDuration.output(duration.round) || '0s'
       out += "\nFinished in #{duration}"
 
-      # overwrite file
-      File.open(@result_file, 'w') do |f|
-        f.puts out
-      end if save_file
+      if save_file
+        File.open(@fail_file, 'w') do |f|
+          f.puts failure_name_only
+        end
+
+        # overwrite file
+        File.open(@result_file, 'w') do |f|
+          f.puts out
+        end
+      end
 
       puts out
     end
