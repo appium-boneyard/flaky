@@ -9,7 +9,7 @@ require 'posix/spawn' # http://rubygems.org/gems/posix-spawn
 require 'digest/md5'
 
 module Flaky
-  VERSION = '0.0.18' unless defined? ::Flaky::VERSION
+  VERSION = '0.0.19' unless defined? ::Flaky::VERSION
   DATE = '2013-12-23' unless defined? ::Flaky::DATE
 
   # require internal files
