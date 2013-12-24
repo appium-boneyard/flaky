@@ -38,11 +38,11 @@ module Flaky
     include Flaky::Color
     attr_reader :tests, :result_dir, :result_file
 
-    def initialize
+    def initialize result_dir_postfix=''
       @tests = {}
       @start_time = Time.now
 
-      result_dir = '/tmp/flaky/'
+      result_dir = '/tmp/flaky/' + result_dir_postfix
       # rm -rf result_dir
       FileUtils.rm_rf result_dir
       FileUtils.mkdir_p result_dir
@@ -87,6 +87,7 @@ module Flaky
       time_format = '%b %d %l:%M %P'
       time_format2 = '%l:%M %P'
       out += "#{@start_time.strftime(time_format)} -#{time_now.strftime(time_format2)}"
+      out += "\n--\n"
 
       if save_file
         File.open(@fail_file, 'w') do |f|

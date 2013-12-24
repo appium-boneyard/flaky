@@ -20,4 +20,5 @@ module Flaky
   require_relative 'flaky/run/all_tests'
   require_relative 'flaky/run/from_file'
   require_relative 'flaky/run/one_test'
+  require_relative 'flaky/run/two_pass'
 end
