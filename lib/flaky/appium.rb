@@ -68,7 +68,8 @@ module Flaky
 
     def start
       self.stop # stop existing process
-      @log = "/tmp/flaky/tmp_log_#{Random.rand(10**4..10**5-1)}"
+      @log = "/tmp/flaky/tmp_log"
+      File.delete(@log) if File.exists? @log
       if @android
         @droid.reset
       else
@@ -94,19 +95,16 @@ module Flaky
 
     def update_buffer data
       @buffer += data
-
-      if @buffer.length >= 32_000
-        self.flush_buffer
-      end
+      self.flush_buffer
     end
 
     def flush_buffer
-      return '' if @buffer.nil? || @buffer.empty?
+      return @log if @buffer.nil? || @buffer.empty?
       File.open(@log, 'a') do |f|
         f.write @buffer
       end
       @buffer = ''
-      @log || ''
+      @log
     end
 
     ##

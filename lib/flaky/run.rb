@@ -80,9 +80,13 @@ module Flaky
       out += "Failure (#{total_failure}):\n#{failure}\n" unless failure.empty?
       out += "Success (#{total_success}):\n#{success}" unless success.empty?
 
-      duration = Time.now - @start_time
+      time_now = Time.now
+      duration = time_now - @start_time
       duration = ChronicDuration.output(duration.round) || '0s'
-      out += "\nFinished in #{duration}"
+      out += "\nFinished in #{duration}\n"
+      time_format = '%b %d %l:%M %P'
+      time_format2 = '%l:%M %P'
+      out += "#{@start_time.strftime(time_format)} -#{time_now.strftime(time_format2)}"
 
       if save_file
         File.open(@fail_file, 'w') do |f|
@@ -163,16 +167,12 @@ module Flaky
         # appium server log
         appium_server_path = log_file.name("#{postfix}.appium.html")
         FileUtils.mkdir_p File.dirname(appium_server_path)
-        File.open(appium_server_path, 'w') do |f|
-          # this may return nil
-          tmp_file = appium.flush_buffer
 
-          # todo: copy file instead of read & delete
-          if !tmp_file.nil? && !tmp_file.empty?
-            f.write File.read tmp_file
-            File.delete tmp_file
-          end
+        tmp_file = appium.flush_buffer
+        if !tmp_file.nil? && !tmp_file.empty?
+          FileUtils.copy_file tmp_file, appium_server_path
         end
+        File.delete tmp_file if File.exists? tmp_file
       end
 
       passed
@@ -193,7 +193,7 @@ module Flaky
 
       old_crash_files = []
       # appium is nil when on sauce
-      if !sauce && appium && appium.ios
+      if !sauce && appium
         collect_crashes old_crash_files
       end
 
@@ -217,8 +217,9 @@ module Flaky
         print " https://saucelabs.com/tests/#{File.read('/tmp/appium_lib_session').chomp}\n"
       end
 
+      # androids adb may crash also and it ends up in the same location as iOS.
       # appium is nil when running on Sauce
-      if !sauce && appium && appium.ios
+      if !sauce && appium
         new_crash_files = []
         collect_crashes new_crash_files
 
@@ -226,7 +227,7 @@ module Flaky
         if new_crash_files.length > 0
           File.open('/tmp/flaky/crashes.txt', 'a') do |f|
             f.puts '--'
-            f.puts "Test: #{test_name} crashed on iOS:"
+            f.puts "Test: #{test_name} crashed on #{appium.ios ? 'ios' : 'android'}:"
             new_crash_files.each { |crash| f.puts crash }
             f.puts '--'
           end
