@@ -1,3 +1,10 @@
+#### v0.0.20 2013-12-26
+
+- [858047e](https://github.com/appium/flaky/commit/858047e530e8d1e4294bfaa91f26492b36a68fda) Release 0.0.20
+- [cb621f2](https://github.com/appium/flaky/commit/cb621f2c885ef30da3b257d1394eda6104c11147) First attempt at 1x 2x
+- [f2fa23c](https://github.com/appium/flaky/commit/f2fa23c662cfd9a72f619191f6990d435e422671) Flush to file immediately
+
+
 #### v0.0.19 2013-12-23
 
 - [25630f1](https://github.com/appium/flaky/commit/25630f1d536715db8539c2d96adba15f5b35d5e4) Release 0.0.19
