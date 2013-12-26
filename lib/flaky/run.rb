@@ -86,7 +86,7 @@ module Flaky
       out += "\nFinished in #{duration}\n"
       time_format = '%b %d %l:%M %P'
       time_format2 = '%l:%M %P'
-      out += "#{@start_time.strftime(time_format)} -#{time_now.strftime(time_format2)}"
+      out += "#{@start_time.strftime(time_format)} - #{time_now.strftime(time_format2)}"
       out += "\n--\n"
 
       if save_file
