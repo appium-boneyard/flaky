@@ -1,3 +1,10 @@
+#### v0.0.21 2014-01-02
+
+- [10babb7](https://github.com/appium/flaky/commit/10babb7dcee2e811c6fb6a78d5dcf2c6fffba2f2) Release 0.0.21
+- [3d93fb2](https://github.com/appium/flaky/commit/3d93fb2b2bd6dd2b8a453750c5425c73cf3db570) Add screen recording to flaky
+- [ec67868](https://github.com/appium/flaky/commit/ec6786818640f22183ce146f3bd75e868d8deada) Fix spacing
+
+
 #### v0.0.20 2013-12-26
 
 - [858047e](https://github.com/appium/flaky/commit/858047e530e8d1e4294bfaa91f26492b36a68fda) Release 0.0.20
