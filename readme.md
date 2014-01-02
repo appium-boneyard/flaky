@@ -46,3 +46,28 @@ Run `flake auth` to automatically dismiss security dialogs.
 - Appium server is restarted
 - [spec](https://github.com/bootstraponline/spec) test logs are saved and colored
 - [Appium](https://github.com/appium/appium) logs are saved and colored
+
+--
+
+#### logs & video
+
+```ruby
+  # Sample setup/teardown that saves logs and records videos.
+  # Appium::Driver.new(app_path: env_app_path, debug: true,
+  #                   device: device, device_cap: device_cap,
+  #                   export_session: true).start_driver
+  #
+  # The following code goes after Driver.new.start_driver
+  puts "Recording #{device} to /tmp/video.mov"
+  flaky_screen_recording_pid = Flaky.screen_recording_start os: device, path: '/tmp/video.mov'
+
+  Minitest.after_run do
+    if $driver
+      save_logs
+      puts "Ending pid: #{flaky_screen_recording_pid}"
+      Flaky.screen_recording_stop flaky_screen_recording_pid # save video
+      $driver.x
+    end
+  end
+```
+
