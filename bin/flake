@@ -20,7 +20,8 @@ if ARGV && ARGV.length === 1 && ARGV.first === 'auth'
   Flaky::AppleScript.beat_security_agent
   exit
 elsif ARGV && ARGV.length === 3
-  if ARGV[0].to_i.kind_of?(Integer) && ARGV[1].to_i.kind_of?(Integer)
+  # .to_i will convert any string to 0 so check using a match regex.
+  if ARGV[0].match(/\d+/) && ARGV[1].match(/\d+/)
     raise 'First pass must be 1' unless ARGV[0].to_i == 1
     # flake 1 2 ios
     pass_1 = ARGV[0] # 1

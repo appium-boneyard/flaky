@@ -156,13 +156,23 @@ module Flaky
       # end
 
       unless sauce
+        movie_path = log_file.name("#{postfix}.mov")
+        FileUtils.mkdir_p File.dirname(movie_path)
+        movie_src = '/tmp/video.mov'
+        if File.exists?(movie_src)
+          # save movie on failure
+          FileUtils.copy movie_src, movie_path if !passed
+          # always clean up movie
+          File.delete movie_src if File.exists? movie_src
+        end
+
         src_system_log = '/tmp/flaky_logs.txt'
         if File.exists? src_system_log
           # postfix is required! or the log will be saved to an incorrect path
           system_log_path = log_file.name("#{postfix}.system.txt")
           FileUtils.mkdir_p File.dirname(system_log_path)
           FileUtils.copy_file src_system_log, system_log_path
-          File.delete src_system_log
+          File.delete src_system_log if File.exists? src_system_log
         end
 
         # appium server log
@@ -170,7 +180,7 @@ module Flaky
         FileUtils.mkdir_p File.dirname(appium_server_path)
 
         tmp_file = appium.flush_buffer
-        if !tmp_file.nil? && !tmp_file.empty?
+        if File.exists?(tmp_file) && !tmp_file.nil? && !tmp_file.empty?
           FileUtils.copy_file tmp_file, appium_server_path
         end
         File.delete tmp_file if File.exists? tmp_file
@@ -208,10 +218,10 @@ module Flaky
 
       passed = _execute run_cmd, test_name, runs, appium, sauce
       unless sauce
-      print cyan("\n #{test_name} ") if @last_test.nil? ||
+        print cyan("\n #{test_name} ") if @last_test.nil? ||
           @last_test != test_name
 
-      print passed ? green(' ✓') : red(' ✖')
+        print passed ? green(' ✓') : red(' ✖')
       else
         print cyan("\n #{test_name} ")
         print passed ? green(' ✓') : red(' ✖')
