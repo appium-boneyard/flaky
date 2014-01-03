@@ -1,3 +1,15 @@
+#### v0.0.22 2014-01-03
+
+- [e60803e](https://github.com/appium/flaky/commit/e60803e2e240617f7d7500c0cfc46e919033235d) Release 0.0.22
+- [a2783c2](https://github.com/appium/flaky/commit/a2783c2ebb7f1c53636ad8e946371443408f1327) Update screen recording
+- [9f6809f](https://github.com/appium/flaky/commit/9f6809ff8ef46d3d8c690ae208a98431a951164b) Ensure unresponsive screen-recording doesn't stop test execution
+- [ca63614](https://github.com/appium/flaky/commit/ca636144dbb2871c86773711fadc6e176ed239e9) Fix video in run modes
+- [d00e5d6](https://github.com/appium/flaky/commit/d00e5d6f3f73f3ba0f3336ae7666587ad1b264fb) Pass no_video boolean to rake
+- [91ec551](https://github.com/appium/flaky/commit/91ec551284736f76b137b18b028f4211d9b46287) Update readme.md
+- [2d6b276](https://github.com/appium/flaky/commit/2d6b2766a110f187d903f77bdd73999d3930e845) Add --no-video flag
+- [e9312c1](https://github.com/appium/flaky/commit/e9312c1f2a9a6c729658ddb6fc826a169a86be0e) Add sample Ruby integration
+
+
 #### v0.0.21 2014-01-02
 
 - [10babb7](https://github.com/appium/flaky/commit/10babb7dcee2e811c6fb6a78d5dcf2c6fffba2f2) Release 0.0.21
