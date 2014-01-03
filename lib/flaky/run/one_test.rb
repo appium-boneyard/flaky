@@ -34,7 +34,7 @@ module Flaky
 
     count.times do
       appium.start unless running_on_sauce
-      run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
+      run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}',#{Flaky.no_video}]"
       flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce
     end
 

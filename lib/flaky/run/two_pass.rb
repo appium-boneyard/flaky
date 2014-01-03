@@ -34,7 +34,7 @@ module Flaky
       count1.times do
         File.open('/tmp/flaky/current.txt', 'a') { |f| f.puts "Running: #{test_name} on #{os}" }
         appium.start unless running_on_sauce
-        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
+        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}',#{Flaky.no_video}]"
         passed = flaky.execute(run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce)
         break if passed # move onto the next test after one successful run
       end
@@ -64,7 +64,7 @@ module Flaky
       count2.times do
         File.open('/tmp/flaky/current.txt', 'a') { |f| f.puts "Running: #{test_name} on #{os}" }
         appium.start unless running_on_sauce
-        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}']"
+        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}',#{Flaky.no_video}]"
         passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce
         break if passed # move onto the next test after one successful run
       end
