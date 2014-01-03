@@ -18,6 +18,9 @@ module Flaky
       raise 'Invalid os. Must be ios or android' unless %w[ios android].include? os
       raise 'Invalid path. Must end with .mov' unless File.extname(path) == '.mov'
 
+      # ensure we have exactly one screen-recording process
+      spawn('killall', '-9', 'screen-recording', :in => '/dev/null', :out => '/dev/null', :err => '/dev/null')
+
       pid = spawn(screen_recording_binary, os, path,
                   :in => '/dev/null', :out => '/dev/null', :err => '/dev/null')
       pid
