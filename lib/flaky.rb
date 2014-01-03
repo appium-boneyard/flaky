@@ -12,6 +12,9 @@ module Flaky
   VERSION = '0.0.21' unless defined? ::Flaky::VERSION
   DATE = '2014-01-02' unless defined? ::Flaky::DATE
 
+  class << self; attr_accessor :no_video; end
+  self.no_video = false; # set default value
+
   # require internal files
   require_relative 'flaky/appium'
   require_relative 'flaky/applescript'

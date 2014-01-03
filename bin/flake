@@ -16,33 +16,41 @@ flake 3 ios files.txt
   If one run passes or 3 runs fail, then we move onto the next test.
 MSG
 
-if ARGV && ARGV.length === 1 && ARGV.first === 'auth'
+args = ARGV
+
+disable_video = args.index '--no-video'
+if disable_video != nil
+  Flaky.no_video = true
+  args.delete_at(disable_video) # remove flag from args
+end
+
+if args && args.length === 1 && args.first === 'auth'
   Flaky::AppleScript.beat_security_agent
   exit
-elsif ARGV && ARGV.length === 3
+elsif args && args.length === 3
   # .to_i will convert any string to 0 so check using a match regex.
-  if ARGV[0].match(/\d+/) && ARGV[1].match(/\d+/)
-    raise 'First pass must be 1' unless ARGV[0].to_i == 1
+  if args[0].match(/\d+/) && args[1].match(/\d+/)
+    raise 'First pass must be 1' unless args[0].to_i == 1
     # flake 1 2 ios
-    pass_1 = ARGV[0] # 1
-    count = ARGV[1] # 2
-    os = ARGV[2] # ios
+    pass_1 = args[0] # 1
+    count = args[1] # 2
+    os = args[2] # ios
     puts "Running all #{os} tests 1x #{count}x"
     Flaky.two_pass count: count, os: os
     exit
   else
     # rake 3 ios files.txt
-    count = ARGV.first
-    os = ARGV[1]
-    file = ARGV.last
-    raise 'File must end in .txt' unless File.extname(ARGV.last).downcase == '.txt'
+    count = args.first
+    os = args[1]
+    file = args.last
+    raise 'File must end in .txt' unless File.extname(args.last).downcase == '.txt'
     puts "Running select #{os} tests from file #{file} #{count}x"
     Flaky.run_from_file count: count, os: os, file: file
     exit
   end
 
 else
-  unless ARGV && ARGV.length === 2
+  unless args && args.length === 2
     puts usage_string
     exit
   end
@@ -50,9 +58,9 @@ end
 
 # flaky 1 ios[test_name]
 
-count = ARGV.first
+count = args.first
 
-last = ARGV.last
+last = args.last
 single_test_match = last.match(/(.+)\[(.*)\]$/)
 all_tests_match = last.match(/(.+)$/)
 

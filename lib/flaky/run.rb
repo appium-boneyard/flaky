@@ -160,8 +160,10 @@ module Flaky
         FileUtils.mkdir_p File.dirname(movie_path)
         movie_src = '/tmp/video.mov'
         if File.exists?(movie_src)
-          # save movie on failure
-          FileUtils.copy movie_src, movie_path if !passed
+          unless Flaky.no_video
+            # save movie on failure
+            FileUtils.copy movie_src, movie_path if !passed
+          end
           # always clean up movie
           File.delete movie_src if File.exists? movie_src
         end
