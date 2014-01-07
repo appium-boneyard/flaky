@@ -178,7 +178,7 @@ module Flaky
         end
 
         # appium server log
-        appium_server_path = log_file.name("#{postfix}.appium.html")
+        appium_server_path = log_file.name("#{postfix}.appium.txt")
         FileUtils.mkdir_p File.dirname(appium_server_path)
 
         tmp_file = appium.flush_buffer
