@@ -5,7 +5,8 @@ module Flaky
     attr_reader :pid, :in, :out, :err
 
     def initialize cmd
-      @pid, @in, @out, @err = POSIX::Spawn::popen4 cmd
+      # redirect err to child's out
+      @pid, @in, @out, @err = POSIX::Spawn::popen4 cmd, {:err => [:child, :out]}
       @in.close
     end
 
@@ -68,7 +69,7 @@ module Flaky
 
     def start
       self.stop # stop existing process
-      @log = "/tmp/flaky/tmp_log"
+      @log = "/tmp/flaky/appium_tmp_log.txt"
       File.delete(@log) if File.exists? @log
       if @android
         @droid.reset
@@ -133,6 +134,9 @@ module Flaky
       end
     end
 
+    # if this is defined using self, then instance methods must refer using
+    # self.class.end_all_nodes
+    # instead self.end_all_nodes is cleaner.
     # https://github.com/rtomayko/posix-spawn#posixspawn-as-a-mixin
     def end_all_nodes
       self.class.kill_all 'node'

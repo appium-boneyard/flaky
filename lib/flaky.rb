@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'fileutils' # system requires
 require 'open3'
-require 'timeout' # to timeout long running color runs
+require 'timeout'
 
 require 'rubygems' # gem requires
 require 'chronic_duration'
