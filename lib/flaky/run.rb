@@ -17,7 +17,7 @@ module Flaky
   class LogArtifact
     def initialize opts={}
       @result_dir = opts.fetch :result_dir, ''
-      @pass_str   = opts.fetch :pass_str, ''
+      @pass_str = opts.fetch :pass_str, ''
       @test_name = opts.fetch :test_name, ''
     end
 
@@ -64,8 +64,10 @@ module Flaky
         runs = stats[:runs]
         pass = stats[:pass]
         fail = stats[:fail]
+        timedout = ''
+        timedout = '-- TIMED OUT' if stats[:timedout] == true
         line = "#{name}, runs: #{runs}, pass: #{pass}," +
-            " fail: #{fail}\n"
+            " fail: #{fail} #{timedout}\n"
         if fail > 0 && pass <= 0
           failure_name_only += "#{File.basename(name)}\n"
           failure += line
@@ -76,7 +78,8 @@ module Flaky
         end
       end
 
-      out = "#{total_success + total_failure} Tests\n\n"
+      total_tests = total_success + total_failure
+      out = "#{total_tests} Tests\n\n"
       out += "Failure (#{total_failure}):\n#{failure}\n" unless failure.empty?
       out += "Success (#{total_success}):\n#{success}" unless success.empty?
 
@@ -87,6 +90,12 @@ module Flaky
       time_format = '%b %d %l:%M %P'
       time_format2 = '%l:%M %P'
       out += "#{@start_time.strftime(time_format)} - #{time_now.strftime(time_format2)}"
+
+      month_day_year = Time.now.strftime '%-m/%-d/%Y'
+      success_percent = (total_success.to_f/total_tests.to_f*100).round(2)
+      success_percent = 100 if total_failure <= 0
+      google_docs_line = [month_day_year, total_tests, total_failure, total_success, success_percent].join("\t")
+      out += "\n#{google_docs_line}"
       out += "\n--\n"
 
       if save_file
@@ -103,29 +112,81 @@ module Flaky
       puts out
     end
 
+    def process_exists pid
+      begin
+        Process.waitpid(pid, Process::WNOHANG)
+        true
+      rescue
+        false
+      end
+    end
+
     def _execute run_cmd, test_name, runs, appium, sauce
       # must capture exit code or log is an array.
-      log, exit_code = Open3.capture2e run_cmd
-
       result = /\d+ runs, \d+ assertions, \d+ failures, \d+ errors, \d+ skips/
       success = /0 failures, 0 errors, 0 skips/
       passed = true
 
-      found_results = log.scan result
-      # all result instances must match success
-      found_results.each do |result|
-        # runs must be >= 1. 0 runs mean no tests were run.
-        r_count = result.match /(\d+) runs/
-        runs_not_zero = r_count && r_count[1] && r_count[1].to_i > 0 ? true : false
+      exit_code = -1
+      timedout = false
+      rake_pid = -1
+      # we need the minitest log in memory to scan for results.
+      log = ''
+      tmp_ruby_log = '/tmp/flaky/ruby_log_tmp.txt'
+      File.delete(tmp_ruby_log) if File.exists? tmp_ruby_log
+      begin
+        ten_minutes = 10 * 60
+        timeout ten_minutes do
+          rake = Flaky::Cmd.new run_cmd
+          rake_pid = rake.pid
 
-        unless result.match(success) && runs_not_zero
-          passed = false
-          break
+          while process_exists rake_pid
+            sleep 0.5
+            begin
+              # readpartial throws end of file reached error
+              log += rake.out.readpartial 999_999
+
+              File.open(tmp_ruby_log, 'a') do |f|
+                f.write log
+              end
+            rescue
+              break
+            end
+          end
+        end
+      rescue Exception => e
+        timedout = true
+        passed = false
+        # after_run in run.rb is triggered by sigint
+        Process.kill :SIGINT, rake_pid
+
+        begin
+          two_minutes = 2 * 60
+          timeout two_minutes do
+            Process::waitpid rake_pid
+          end
+        rescue # if the process still isn't done after sigint, use sigkill
+          Process.kill :SIGKILL, rake_pid
         end
       end
 
-      # no results found.
-      passed = false if found_results.length <= 0
+      unless timedout
+        found_results = log.scan result
+        # all result instances must match success
+        found_results.each do |result|
+          # runs must be >= 1. 0 runs mean no tests were run.
+          r_count = result.match /(\d+) runs/
+          runs_not_zero = r_count && r_count[1] && r_count[1].to_i > 0 ? true : false
+
+          unless result.match(success) && runs_not_zero
+            passed = false
+            break
+          end
+        end
+
+        # no results found.
+        passed = false if found_results.length <= 0
+      end
       pass_str = passed ? 'pass' : 'fail'
       test = @tests[test_name]
       # save log
@@ -135,6 +196,7 @@ module Flaky
       else
         fail = test[:fail] += 1
         postfix = "fail_#{fail}"
+        test[:timedout] = true if timedout
       end
 
       postfix = "#{runs}_#{test_name}_" + postfix
@@ -143,17 +205,12 @@ module Flaky
       log_file = LogArtifact.new result_dir: result_dir, pass_str: pass_str, test_name: test_name
 
       # File.open 'w' will not create folders. Use mkdir_p before.
-      test_file_path = log_file.name("#{postfix}.html")
+      test_file_path = log_file.name("#{postfix}.txt")
       FileUtils.mkdir_p File.dirname(test_file_path)
       # html Ruby test log
       File.open(test_file_path, 'w') do |f|
         f.write log
       end
-
-      # TODO: Get iOS simulator system log from appium
-      # File.open(log_file.name("#{postfix}.server.log.txt"), 'w') do |f|
-      #  f.write appium.tail.out.readpartial(999_999_999)
-      # end
 
       unless sauce
         movie_path = log_file.name("#{postfix}.mov")
@@ -166,6 +223,13 @@ module Flaky
           end
           # always clean up movie
           File.delete movie_src if File.exists? movie_src
+        end
+
+        # save .TIMED_OUT.txt in timeout fails
+        if timedout
+          timeout_path = log_file.name("#{postfix}.TIMED_OUT.txt")
+          FileUtils.mkdir_p File.dirname(timeout_path)
+          File.open(timeout_path, 'w') {}
         end
 
         src_system_log = '/tmp/flaky_logs.txt'
@@ -186,6 +250,8 @@ module Flaky
           FileUtils.copy_file tmp_file, appium_server_path
         end
         File.delete tmp_file if File.exists? tmp_file
+        # also delete the temp ruby log
+        File.delete tmp_ruby_log if File.exists? tmp_ruby_log
       end
 
       passed
@@ -215,13 +281,13 @@ module Flaky
       # local appium is not required when running on Sauce
       raise 'must pass :appium' unless appium || sauce
 
-      test = @tests[test_name] ||= {runs: 0, pass: 0, fail: 0}
+      test = @tests[test_name] ||= {runs: 0, pass: 0, fail: 0, timedout: false}
       runs = test[:runs] += 1
 
       passed = _execute run_cmd, test_name, runs, appium, sauce
       unless sauce
         print cyan("\n #{test_name} ") if @last_test.nil? ||
-          @last_test != test_name
+            @last_test != test_name
 
         print passed ? green(' ✓') : red(' ✖')
       else
