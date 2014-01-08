@@ -83,7 +83,7 @@ Run `flake auth` to automatically dismiss security dialogs.
       save_logs
       puts "Ending pid: #{flaky_screen_recording_pid}"
       Flaky.screen_recording_stop flaky_screen_recording_pid # save video
-      $driver.x
+      ignore { wait(10) { $driver.x } }
     end
   end
 ```
