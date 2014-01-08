@@ -1,3 +1,11 @@
+#### v0.0.23 2014-01-08
+
+- [2b19619](https://github.com/appium/flaky/commit/2b19619a2f544c0e29592a2eb814276cb61f1266) Release 0.0.23
+- [44b1375](https://github.com/appium/flaky/commit/44b137532aedddcaf3eacb7350e7ce73f7c55aac) Add 10 minute test timeout
+- [cefcfe3](https://github.com/appium/flaky/commit/cefcfe35f439e1939f0f8b1b63ffea3daecb685d) Update readme.md
+- [3335ff0](https://github.com/appium/flaky/commit/3335ff015e9f04183e2bc408025c42785801839d) Fix appium log extension
+
+
 #### v0.0.22 2014-01-03
 
 - [e60803e](https://github.com/appium/flaky/commit/e60803e2e240617f7d7500c0cfc46e919033235d) Release 0.0.22
