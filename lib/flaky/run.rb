@@ -134,6 +134,13 @@ module Flaky
       log = ''
       tmp_ruby_log = '/tmp/flaky/ruby_log_tmp.txt'
       File.delete(tmp_ruby_log) if File.exists? tmp_ruby_log
+
+      flaky_logs_txt = '/tmp/flaky_logs.txt'
+      File.delete flaky_logs_txt if File.exist? flaky_logs_txt
+      tail_cmd = "tail -f -n1 /Users/#{ENV['USER']}/Library/Logs/iOS\\ Simulator/7.0.3/system.log > #{flaky_logs_txt}"
+      tail_cmd = "adb logcat > #{flaky_logs_txt}" if !appium.ios
+
+      tail_system_log = Flaky::Cmd.new tail_cmd
       begin
         ten_minutes = 10 * 60
         timeout ten_minutes do
@@ -168,6 +175,14 @@ module Flaky
         rescue # if the process still isn't done after sigint, use sigkill
           Process.kill :SIGKILL, rake_pid
         end
+      end
+
+      # waitpid may throw if the pid doesn't exist by the time we're ready to wait.
+      begin
+        tail_system_log_pid = tail_system_log.pid
+        Process.kill :SIGKILL, tail_system_log_pid
+        Process::waitpid tail_system_log_pid
+      rescue
       end
 
       unless timedout

@@ -30,11 +30,12 @@ module Flaky
       raise "Missing tests #{missing_tests}"
     end
 
+    raise "Rakefile doesn't exist in #{current_dir}" unless File.exists?(File.join(current_dir, 'Rakefile'))
+
     running_on_sauce = ENV['SAUCE_USERNAME'] ? true : false
     flaky = Flaky::Run.new
-    appium = Appium.new unless running_on_sauce
-
-    raise "Rakefile doesn't exist in #{current_dir}" unless File.exists?(File.join(current_dir, 'Rakefile'))
+    is_android = os.strip.downcase == 'android'
+    appium = Appium.new(android: is_android) unless running_on_sauce
 
     resolved_paths.each do |test_file|
       file = test_file

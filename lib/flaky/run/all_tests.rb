@@ -11,7 +11,8 @@ module Flaky
 
     running_on_sauce = ENV['SAUCE_USERNAME'] ? true : false
     flaky = Flaky::Run.new
-    appium = Appium.new unless running_on_sauce
+    is_android = os.strip.downcase == 'android'
+    appium = Appium.new(android: is_android) unless running_on_sauce
 
     current_dir = Dir.pwd
     raise "Rakefile doesn't exist in #{current_dir}" unless File.exists?(File.join(current_dir, 'Rakefile'))

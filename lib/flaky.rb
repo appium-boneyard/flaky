@@ -10,7 +10,7 @@ require 'digest/md5'
 
 module Flaky
   VERSION = '0.0.23' unless defined? ::Flaky::VERSION
-  DATE = '2014-01-08' unless defined? ::Flaky::DATE
+  DATE = '2014-01-09' unless defined? ::Flaky::DATE
 
   class << self; attr_accessor :no_video; end
   self.no_video = false; # set default value
@@ -18,6 +18,7 @@ module Flaky
   # require internal files
   require_relative 'flaky/appium'
   require_relative 'flaky/applescript'
+  require_relative 'flaky/reset_android'
   require_relative 'flaky/run'
 
   require_relative 'flaky/run/all_tests'
