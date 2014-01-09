@@ -1,3 +1,9 @@
+#### v0.0.24 2014-01-09
+
+- [83081fe](https://github.com/appium/flaky/commit/83081fea11707fd045602038f3991be4c21433f0) Release 0.0.24
+- [d43b541](https://github.com/appium/flaky/commit/d43b5410f1d6a48b97fcafc4d8a8998bfae29437) Tail without using appium for 100% success
+
+
 #### v0.0.23 2014-01-08
 
 - [2b19619](https://github.com/appium/flaky/commit/2b19619a2f544c0e29592a2eb814276cb61f1266) Release 0.0.23
