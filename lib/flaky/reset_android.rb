@@ -39,6 +39,7 @@ module Flaky
     end
 
     def _push_apk
+      # todo: .err now contains the contents of stdout so raising on .err doesn't work.
       # dir must exist before pushing
       POSIX::Spawn::Child.new 'adb shell "mkdir /data/local/tmp/"'
       push_apk = POSIX::Spawn::Child.new %Q(adb push "#{@apk}" "/data/local/tmp/#{@md5}.apk")
