@@ -18,7 +18,6 @@ module Flaky
   # require internal files
   require_relative 'flaky/appium'
   require_relative 'flaky/applescript'
-  require_relative 'flaky/reset_android'
   require_relative 'flaky/run'
 
   require_relative 'flaky/run/all_tests'

@@ -61,7 +61,6 @@ module Flaky
       @log = ''
       @buffer = ''
       @android = opts.fetch(:android, false)
-      @droid = Flaky::Android.new if @android
       @ios = ! @android
     end
 
@@ -69,12 +68,8 @@ module Flaky
       self.stop # stop existing process
       @log = "/tmp/flaky/appium_tmp_log.txt"
       File.delete(@log) if File.exists? @log
-      # must not rely on appium for reset.
-      if @android
-        @droid.reset
-      else
-        self.class.remove_ios_apps
-      end
+
+      # appium should reset at startup
 
       @@thread.exit if @@thread
       @@thread = Thread.new do
