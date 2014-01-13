@@ -1,3 +1,10 @@
+#### v0.0.25 2014-01-13
+
+- [8df71ee](https://github.com/appium/flaky/commit/8df71eebc6830c7d8375dfc1d2fc17e2a4829540) Release 0.0.25
+- [e15c023](https://github.com/appium/flaky/commit/e15c0239f004fae6387fcd882338a9064591407b) Try relying on Appium for reset on session start
+- [8493e5f](https://github.com/appium/flaky/commit/8493e5f128b25738f7148620800b0b0e30685d10) Add note to android reset
+
+
 #### v0.0.24 2014-01-09
 
 - [83081fe](https://github.com/appium/flaky/commit/83081fea11707fd045602038f3991be4c21433f0) Release 0.0.24
