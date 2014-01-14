@@ -59,28 +59,12 @@ Run `flake auth` to automatically dismiss security dialogs.
   #
   # The following code goes after Driver.new.start_driver
 
-  def save_logs
-    file = '/tmp/flaky_logs.txt'
-    logs = nil
-
-    begin
-      logs = $driver.driver.manage.logs.get(:logcat)
-    rescue # try iOS
-      logs = $driver.driver.manage.logs.get(:syslog)
-    end
-
-    File.open(file, 'w') do |f|
-      # Save only the message from Selenium::WebDriver::LogEntry
-      f.write (logs.map { |line| line.message }).join("\n")
-    end
-  end
 
   puts "Recording #{device} to /tmp/video.mov"
   flaky_screen_recording_pid = Flaky.screen_recording_start os: device, path: '/tmp/video.mov'
 
   Minitest.after_run do
     if $driver
-      save_logs
       puts "Ending pid: #{flaky_screen_recording_pid}"
       Flaky.screen_recording_stop flaky_screen_recording_pid # save video
       ignore { wait(10) { $driver.x } }
