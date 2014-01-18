@@ -51,6 +51,7 @@ module Flaky
         _out.read
         _err.read
       rescue Errno::EAGAIN
+      # POSIX::Spawn::popen4 may raise EAGAIN. If it does, retry after a second.
           sleep 1
           retry
       ensure
