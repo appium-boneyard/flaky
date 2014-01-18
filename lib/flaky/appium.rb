@@ -44,14 +44,19 @@ module Flaky
     end
 
     def self.kill_all process_name
-      _pid, _in, _out, _err = POSIX::Spawn::popen4('killall', '-9', process_name)
-      raise "Unable to kill #{process_name}" unless _pid
-      _in.close
-      _out.read
-      _err.read
-    ensure
-      [_in, _out, _err].each { |io| io.close unless io.nil? || io.closed? }
-      Process::waitpid(_pid) if _pid
+      begin
+        _pid, _in, _out, _err = POSIX::Spawn::popen4('killall', '-9', process_name)
+        raise "Unable to kill #{process_name}" unless _pid
+        _in.close
+        _out.read
+        _err.read
+      rescue Errno::EAGAIN
+          sleep 1
+          retry
+      ensure
+        [_in, _out, _err].each { |io| io.close unless io.nil? || io.closed? }
+        Process::waitpid(_pid) if _pid
+      end
     end
 
     # android: true to activate Android mode
