@@ -83,8 +83,17 @@ module Flaky
         self.launch.wait
       end
 
-      while !self.ready
-        sleep 0.5
+      begin
+        timeout 60 do # timeout in seconds
+          while !self.ready
+            sleep 0.5
+          end
+        end
+      rescue Timeout::Error
+        # try again if appium fails to become ready
+        # sometimes the simulator never launches.
+        # the sim crashes or any number of issues.
+        self.start
       end
 
       # -e = -A = include other user's processes
