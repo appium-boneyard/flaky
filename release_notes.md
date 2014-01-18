@@ -1,3 +1,9 @@
+#### v0.0.27 2014-01-18
+
+- [a342407](https://github.com/appium/flaky/commit/a342407388e8d8b5bdd09ba2293f2baa25f060b1) Release 0.0.27
+- [410a64e](https://github.com/appium/flaky/commit/410a64ef7b39380418c84d77459d9a9355df27fa) Retry failed start after 60 seconds
+
+
 #### v0.0.26 2014-01-18
 
 - [844516a](https://github.com/appium/flaky/commit/844516a79eb5753aec263fc9fd88dd2fbda9147c) Release 0.0.26
