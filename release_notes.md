@@ -1,3 +1,10 @@
+#### v0.0.26 2014-01-18
+
+- [844516a](https://github.com/appium/flaky/commit/844516a79eb5753aec263fc9fd88dd2fbda9147c) Release 0.0.26
+- [4a2b1f5](https://github.com/appium/flaky/commit/4a2b1f5a5d663e8110cb58188450c6d1d80973b5) Rescue Errno::EAGAIN
+- [a547503](https://github.com/appium/flaky/commit/a547503c3c05b434947a9bb5bc693c0559fdf828) Update readme.md
+
+
 #### v0.0.25 2014-01-13
 
 - [8df71ee](https://github.com/appium/flaky/commit/8df71eebc6830c7d8375dfc1d2fc17e2a4829540) Release 0.0.25
