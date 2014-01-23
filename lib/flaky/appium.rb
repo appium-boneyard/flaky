@@ -72,7 +72,7 @@ module Flaky
 
     def start
       self.stop # stop existing process
-      @log = "/tmp/flaky/appium_tmp_log.txt"
+      @log = '/tmp/flaky/appium_tmp_log.txt'
       File.delete(@log) if File.exists? @log
 
       # appium should reset at startup

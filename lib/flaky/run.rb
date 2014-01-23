@@ -138,7 +138,7 @@ module Flaky
       flaky_logs_txt = '/tmp/flaky_logs.txt'
       File.delete flaky_logs_txt if File.exist? flaky_logs_txt
       tail_cmd = "tail -f -n1 /Users/#{ENV['USER']}/Library/Logs/iOS\\ Simulator/7.0.3/system.log > #{flaky_logs_txt}"
-      tail_cmd = "adb logcat > #{flaky_logs_txt}" if !appium.ios
+      tail_cmd = "adb logcat > #{flaky_logs_txt}" if !sauce && !appium.ios
 
       tail_system_log = Flaky::Cmd.new tail_cmd
       begin
