@@ -274,6 +274,7 @@ module Flaky
         if File.exists? app_logs
           Dir.glob(File.join(app_logs, '*')).each { |f| FileUtils.cp f, dest_dir }
         end
+        FileUtils.rm_rf app_logs
       end
 
       passed
