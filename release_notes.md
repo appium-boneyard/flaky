@@ -1,3 +1,10 @@
+#### v0.0.28 2014-01-24
+
+- [17089b4](https://github.com/appium/flaky/commit/17089b4f26ae32a1fe34ff40f90f528853e4f0e6) Release 0.0.28
+- [b33e4a2](https://github.com/appium/flaky/commit/b33e4a2f5b737056ef308f721e97dacbe033bbce) Capture iOS app specific logs
+- [f5e1dde](https://github.com/appium/flaky/commit/f5e1dde91a703491f10f77c9011173263d3a9bf9) Don't use adb logcat when running on Sauce
+
+
 #### v0.0.27 2014-01-18
 
 - [a342407](https://github.com/appium/flaky/commit/a342407388e8d8b5bdd09ba2293f2baa25f060b1) Release 0.0.27
