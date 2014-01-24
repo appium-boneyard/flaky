@@ -67,6 +67,7 @@ Run `flake auth` to automatically dismiss security dialogs.
     if $driver
       puts "Ending pid: #{flaky_screen_recording_pid}"
       Flaky.screen_recording_stop flaky_screen_recording_pid # save video
+      Flaky.capture_ios_app_log 'MyApp.app' # save app logs
       ignore { wait(10) { $driver.x } }
     end
   end

@@ -267,6 +267,13 @@ module Flaky
         File.delete tmp_file if File.exists? tmp_file
         # also delete the temp ruby log
         File.delete tmp_ruby_log if File.exists? tmp_ruby_log
+
+        # copy app logs
+        app_logs = '/tmp/flaky_tmp_log_folder'
+        dest_dir = File.dirname(appium_server_path)
+        if File.exists? app_logs
+          Dir.glob(File.join(app_logs, '*')).each { |f| FileUtils.cp f, dest_dir }
+        end
       end
 
       passed
