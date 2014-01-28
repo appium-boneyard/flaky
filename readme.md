@@ -1,6 +1,6 @@
 #### flaky [![Gem Version](https://badge.fury.io/rb/flaky.png)](http://rubygems.org/gems/flaky) [![Dependency Status](https://gemnasium.com/appium/flaky.png)](https://gemnasium.com/appium/flaky)
 
-Run Appium iOS tests to measure flakiness.
+Run Appium iOS/Android tests on OS X to measure flakiness.
 
 - `gem uninstall -aIx flaky; gem install --no-rdoc --no-ri flaky`
 - `flake 3 ios[nop]` - Run the iOS test named nop 3 times.
