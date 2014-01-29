@@ -152,6 +152,7 @@ module Flaky
             begin
               # readpartial throws end of file reached error
               log += rake.out.readpartial 999_999
+              log += rake.err.readpartial 999_999
 
               File.open(tmp_ruby_log, 'a') do |f|
                 f.write log
