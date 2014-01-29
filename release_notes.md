@@ -1,3 +1,11 @@
+#### v0.0.29 2014-01-29
+
+- [52a30bb](https://github.com/appium/flaky/commit/52a30bbcf054b92072865d95f915d148378daeba) Release 0.0.29
+- [45f669c](https://github.com/appium/flaky/commit/45f669cb17cf3b1adbdde4eb6de973eee825a292) Save rake.err
+- [063795e](https://github.com/appium/flaky/commit/063795ec00bb8f0b36ce314fb2bb2519c34e01d2) Update readme.md
+- [c3b057c](https://github.com/appium/flaky/commit/c3b057ccf9a9dce4a47a4d0b719a31e61fb40ad4) Clean up app logs after saving
+
+
 #### v0.0.28 2014-01-24
 
 - [17089b4](https://github.com/appium/flaky/commit/17089b4f26ae32a1fe34ff40f90f528853e4f0e6) Release 0.0.28
