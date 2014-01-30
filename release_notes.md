@@ -1,3 +1,9 @@
+#### v0.0.31 2014-01-29
+
+- [fc6bb10](https://github.com/appium/flaky/commit/fc6bb107661869ff93a34a7947488ac904c3c0c5) Release 0.0.31
+- [bc82107](https://github.com/appium/flaky/commit/bc82107f0b51f5a74a5d44332f62a8e52468b32f) Flush stdout for CI
+
+
 #### v0.0.30 2014-01-29
 
 - [038a3d4](https://github.com/appium/flaky/commit/038a3d491839b221b4784ee68b822c565150aa5c) Release 0.0.30
