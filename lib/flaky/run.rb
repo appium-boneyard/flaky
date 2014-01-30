@@ -148,18 +148,27 @@ module Flaky
           rake_pid = rake.pid
 
           while process_exists rake_pid
-            sleep 0.5
             begin
               # readpartial throws end of file reached error
-              log += rake.out.readpartial 999_999
-              log += rake.err.readpartial 999_999
+              new_out = rake.out.readpartial 999_999 # blocks on 0 data
+              log += new_out
 
               File.open(tmp_ruby_log, 'a') do |f|
-                f.write log
+                f.write new_out
               end
             rescue
-              break
             end
+          end
+
+          # must write rake.err. it's not included in rake.out
+          begin
+            new_err = rake.err.read_nonblock 999_999
+
+            log += new_err if new_err
+            File.open(tmp_ruby_log, 'a') do |f|
+              f.write new_err
+            end if new_err
+          rescue
           end
         end
       rescue Exception => e
