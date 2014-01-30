@@ -1,3 +1,9 @@
+#### v0.0.30 2014-01-29
+
+- [038a3d4](https://github.com/appium/flaky/commit/038a3d491839b221b4784ee68b822c565150aa5c) Release 0.0.30
+- [09688af](https://github.com/appium/flaky/commit/09688afeb460d4a7fd7417aca260817b01eeab34) Fix err logging
+
+
 #### v0.0.29 2014-01-29
 
 - [52a30bb](https://github.com/appium/flaky/commit/52a30bbcf054b92072865d95f915d148378daeba) Release 0.0.29
