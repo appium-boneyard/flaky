@@ -25,3 +25,6 @@ module Flaky
   require_relative 'flaky/run/one_test'
   require_relative 'flaky/run/two_pass'
 end
+
+# sync all writes to stdout.
+$stdout.sync = true

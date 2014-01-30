@@ -346,8 +346,6 @@ module Flaky
         end
       end
 
-      $stdout.flush # flush for Jenkins CI
-
       @last_test = test_name
       passed
     end
