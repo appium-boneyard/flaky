@@ -24,6 +24,8 @@ if disable_video != nil
   args.delete_at(disable_video) # remove flag from args
 end
 
+Flaky.no_video = true if ENV['SAUCE_USERNAME'] && ENV['SAUCE_ACCESS_KEY']
+
 puts "Recording Video: #{!Flaky.no_video}"
 
 if args && args.length === 1 && args.first === 'auth'

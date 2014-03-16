@@ -285,6 +285,15 @@ module Flaky
           Dir.glob(File.join(app_logs, '*')).each { |f| FileUtils.cp f, dest_dir }
         end
         FileUtils.rm_rf app_logs
+
+        # copy android coverage
+        coverage_folder = '/tmp/flaky/coverage'
+        FileUtils.mkdir_p coverage_folder
+        coverage_file = '/tmp/coverage.ec'
+        if File.exists? '/tmp/coverage.ec'
+          FileUtils.cp coverage_file, File.join(coverage_folder, "#{Time.now.to_i}.ec")
+          File.delete coverage_file
+        end
       end
 
       passed

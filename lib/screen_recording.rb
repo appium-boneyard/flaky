@@ -27,6 +27,8 @@ module Flaky
     end
 
     def screen_recording_start opts={}
+      return if Flaky.no_video
+
       os = opts[:os]
       path = opts[:path]
       raise ':os is required' unless os
