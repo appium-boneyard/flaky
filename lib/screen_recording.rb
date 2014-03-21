@@ -2,6 +2,8 @@
 require 'rubygems'
 require 'posix-spawn'
 
+require_relative 'flaky.rb'
+
 module Flaky
   class << self
 
