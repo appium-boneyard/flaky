@@ -18,7 +18,7 @@ This only works with:
 
 - [Ruby / appium_lib](https://github.com/appium/ruby_lib)
 - iOS iPhone Simulator 6.1 +
-- Unique test names per platform
+- Unique test file names per platform
 
 #### Security dialogs
 
