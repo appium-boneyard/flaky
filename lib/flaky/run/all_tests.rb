@@ -30,7 +30,7 @@ module Flaky
     puts "Globbing: #{final_path}"
 
     Dir.glob(final_path) do |test_file|
-      raise "#{test_file} does not exist." if test_file.empty?
+      raise "#{test_file} does not exist." unless File.exist?(test_file)
 
       test_name = test_file.sub(File.join(current_dir, active_dir), '')
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
