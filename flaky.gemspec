@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'chronic_duration', '~> 0.10.2'
   s.add_runtime_dependency 'posix-spawn', '~> 0.3.6'
+  s.add_runtime_dependency 'toml', '~> 0.1.1'
 
   s.add_development_dependency 'rake', '~> 10.1.0'
 

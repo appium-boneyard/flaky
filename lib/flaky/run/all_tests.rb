@@ -15,21 +15,30 @@ module Flaky
     appium = Appium.new(android: is_android) unless running_on_sauce
 
     current_dir = Dir.pwd
-    raise "Rakefile doesn't exist in #{current_dir}" unless File.exists?(File.join(current_dir, 'Rakefile'))
+    rakefile = File.expand_path(File.join(current_dir, 'Rakefile'))
+    raise "Rakefile doesn't exist in #{current_dir}" unless File.exists? rakefile
+    flaky_txt = File.expand_path(File.join(current_dir, 'flaky.txt'))
 
-    Dir.glob(File.join current_dir, 'appium', os, 'specs', '**/*.rb') do |test_file|
-      file = test_file
-      name = File.basename file, '.*'
+    parsed = TOML.load File.read flaky_txt
+    puts "flaky.txt: #{parsed}"
+    android_dir = parsed['android']
+    ios_dir = parsed['ios']
+    glob = parsed.fetch 'glob', '**/*.rb'
 
-      raise "#{test_file} does not exist." if file.empty?
+    active_dir = is_android ? android_dir : ios_dir
+    final_path = File.expand_path File.join current_dir, active_dir, glob
+    puts "Globbing: #{final_path}"
 
-      test_name = file.sub(current_dir + '/appium/', '')
+    Dir.glob(final_path) do |test_file|
+      raise "#{test_file} does not exist." if test_file.empty?
+
+      test_name = test_file.sub(File.join(current_dir, active_dir), '')
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
         File.open('/tmp/flaky/current.txt', 'a') { |f| f.puts "Running: #{test_name} on #{os}" }
         appium.start unless running_on_sauce
-        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{name}',#{Flaky.no_video}]"
+        run_cmd = "cd #{current_dir}; rake #{os.downcase}['#{test_file}',#{Flaky.no_video}]"
         passed = flaky.execute run_cmd: run_cmd, test_name: test_name, appium: appium, sauce: running_on_sauce
         break if passed # move onto the next test after one successful run
       end

@@ -7,6 +7,7 @@ require 'rubygems' # gem requires
 require 'chronic_duration'
 require 'posix/spawn' # http://rubygems.org/gems/posix-spawn
 require 'digest/md5'
+require 'toml'
 
 module Flaky
   VERSION = '0.0.31' unless defined? ::Flaky::VERSION
