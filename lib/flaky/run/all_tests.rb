@@ -31,8 +31,9 @@ module Flaky
 
     Dir.glob(final_path) do |test_file|
       raise "#{test_file} does not exist." unless File.exist?(test_file)
+      test_file = File.expand_path test_file
 
-      test_name = test_file.sub(File.join(current_dir, active_dir), '')
+      test_name = test_file.sub(File.expand_path(File.join(current_dir, active_dir), ''))
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
