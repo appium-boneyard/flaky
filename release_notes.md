@@ -1,3 +1,16 @@
+#### v0.1.0 2014-04-30
+
+- [f8a79a4](https://github.com/appium/flaky/commit/f8a79a47fe01bd0e1f9e668b0a97d7d9ba6d41b7) Release 0.1.0
+- [0fee9fe](https://github.com/appium/flaky/commit/0fee9fe9b830573d80c707725acef229df58375e) Fix test names
+- [6742eee](https://github.com/appium/flaky/commit/6742eeec8c9febc118a0c771d27401d3487e26d2) Update exist check
+- [0f45df9](https://github.com/appium/flaky/commit/0f45df99b19b81aeb221ab4fadcf4d50cf7e8826) Enable flaky.txt for all_tests run mode
+- [3203d63](https://github.com/appium/flaky/commit/3203d63874c98888ebe5ef1b842f658ab8cc7abc) Update readme.md
+- [add1220](https://github.com/appium/flaky/commit/add12203ed41f18f4f18a37e42f798fdc69a49ca) Fix no_video crash
+- [552db94](https://github.com/appium/flaky/commit/552db94887ec688e094409016ddb3b46319a2e57) Android coverage and iOS video fix
+- [4f2422e](https://github.com/appium/flaky/commit/4f2422e9ba23171aaba3838bdac8070cbf5b9832) Update readme.md
+- [031f562](https://github.com/appium/flaky/commit/031f56218a07720f971e95a9aa706c66adf62acd) Use .sync instead of .flush
+
+
 #### v0.0.31 2014-01-29
 
 - [fc6bb10](https://github.com/appium/flaky/commit/fc6bb107661869ff93a34a7947488ac904c3c0c5) Release 0.0.31
