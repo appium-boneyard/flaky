@@ -18,10 +18,12 @@ MSG
 
 args = ARGV
 
-disable_video = args.index '--no-video'
-if disable_video != nil
+video = args.index '--video'
+if video != nil
+  Flaky.no_video = false
+  args.delete_at(video) # remove flag from args
+else
   Flaky.no_video = true
-  args.delete_at(disable_video) # remove flag from args
 end
 
 Flaky.no_video = true if ENV['SAUCE_USERNAME'] && ENV['SAUCE_ACCESS_KEY']
