@@ -1,3 +1,11 @@
+#### v0.1.1 2014-05-19
+
+- [98f3c87](https://github.com/appium/flaky/commit/98f3c87c1caa7c64b1d1da26f43642f4bdef04d1) Release 0.1.1
+- [62d4278](https://github.com/appium/flaky/commit/62d427893f19fea1729a5c3c6f79ce72e1a11919) Fix test name
+- [963978f](https://github.com/appium/flaky/commit/963978f041f2198dda07779505a058e971e13273) Default to no video
+- [dd0ea3a](https://github.com/appium/flaky/commit/dd0ea3a99180e3c687ce67aae6cbf6abe2dac163) Fix paren
+
+
 #### v0.1.0 2014-04-30
 
 - [f8a79a4](https://github.com/appium/flaky/commit/f8a79a47fe01bd0e1f9e668b0a97d7d9ba6d41b7) Release 0.1.0
