@@ -34,6 +34,10 @@ module Flaky
       test_file = File.expand_path test_file
 
       test_name = test_file.sub(File.expand_path(File.join(current_dir, active_dir)), '')
+
+      # remove leading /
+      test_name.sub!(test_name.match(/^\//).to_s, '')
+
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
