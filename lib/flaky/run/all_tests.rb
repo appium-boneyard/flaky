@@ -18,7 +18,6 @@ module Flaky
     rakefile = File.expand_path(File.join(current_dir, 'Rakefile'))
     raise "Rakefile doesn't exist in #{current_dir}" unless File.exists? rakefile
     flaky_txt = File.expand_path(File.join(current_dir, 'flaky.txt'))
-
     parsed = TOML.load File.read flaky_txt
     puts "flaky.txt: #{parsed}"
     android_dir = parsed['android']
@@ -34,10 +33,8 @@ module Flaky
       test_file = File.expand_path test_file
 
       test_name = test_file.sub(File.expand_path(File.join(current_dir, active_dir)), '')
-
       # remove leading /
       test_name.sub!(test_name.match(/^\//).to_s, '')
-
       test_name = File.join(File.dirname(test_name), File.basename(test_name, '.*'))
 
       count.times do
