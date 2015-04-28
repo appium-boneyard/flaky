@@ -1,3 +1,12 @@
+#### v0.1.2 2015-04-28
+
+- [8df75d3](https://github.com/appium/flaky/commit/8df75d344c5f963985637c3128bf1173cb34877f) Release 0.1.2
+- [bc3375e](https://github.com/appium/flaky/commit/bc3375e4a8f68d632e09df981590eeeb9532c43f) Update adb test
+- [0c18668](https://github.com/appium/flaky/commit/0c18668ae7c3f394fe4b8544a2b1cbca22904407) Add adb test
+- [171333c](https://github.com/appium/flaky/commit/171333c172d26a3ef2da0165170894a66170cff2) Capture debug logs from appium server
+- [7177da4](https://github.com/appium/flaky/commit/7177da4e14f711710bfec1d53e260dabcd92e3d0) Add flaky.txt support to run/one_test.rb
+
+
 #### v0.1.1 2014-05-19
 
 - [98f3c87](https://github.com/appium/flaky/commit/98f3c87c1caa7c64b1d1da26f43642f4bdef04d1) Release 0.1.1
