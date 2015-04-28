@@ -10,8 +10,8 @@ require 'digest/md5'
 require 'toml'
 
 module Flaky
-  VERSION = '0.1.1' unless defined? ::Flaky::VERSION
-  DATE = '2014-05-19' unless defined? ::Flaky::DATE
+  VERSION = '0.1.2' unless defined? ::Flaky::VERSION
+  DATE = '2015-04-28' unless defined? ::Flaky::DATE
 
   class << self; attr_accessor :no_video; end
   self.no_video = false; # set default value
