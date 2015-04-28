@@ -1,4 +1,4 @@
-#### flaky [![Gem Version](https://badge.fury.io/rb/flaky.png)](http://rubygems.org/gems/flaky) [![Dependency Status](https://gemnasium.com/appium/flaky.png)](https://gemnasium.com/appium/flaky)
+#### flaky [![Gem Version](https://badge.fury.io/rb/flaky.svg)](http://rubygems.org/gems/flaky) [![Dependency Status](https://gemnasium.com/appium/flaky.svg)](https://gemnasium.com/appium/flaky)
 
 Run Appium iOS/Android tests on OS X to measure flakiness.
 
