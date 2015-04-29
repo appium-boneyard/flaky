@@ -1,24 +1,6 @@
 # encoding: utf-8
 module Flaky
 
-  class Cmd
-    attr_reader :pid, :in, :out, :err
-
-    def initialize cmd
-      # redirect err to child's out
-      @pid, @in, @out, @err = POSIX::Spawn::popen4 cmd, {:err => [:child, :out]}
-      @in.close
-    end
-
-    def stop
-      [@in, @out, @err].each { |io| io.close unless io.nil? || io.closed? }
-      begin
-        Process.kill 'KILL', @pid
-        Process.waitpid @pid
-      rescue # no such process
-      end
-    end
-  end
 
   #noinspection RubyResolve
   class Appium
@@ -27,37 +9,11 @@ module Flaky
     @@thread = nil
 
     def self.remove_ios_apps
-      user = ENV['USER']
-      raise 'User must be defined' unless user
-
-      # Must kill iPhone simulator or strange install errors will occur.
-      self.kill_all 'iPhone Simulator'
-
-      app_glob = "/Users/#{user}/Library/Application Support/iPhone Simulator/**/Applications"
-      Dir.glob(app_glob) do |ios_app_folder|
-        FileUtils.rm_rf ios_app_folder
-        root = File.dirname ios_app_folder
-        FileUtils.rm_rf File.join(root, 'Library/TCC')
-        FileUtils.rm_rf File.join(root, 'Library/Caches')
-        FileUtils.rm_rf File.join(root, 'Library/Media')
-      end
+      # nop -- this feature has moved into the appium server
     end
 
     def self.kill_all process_name
-      begin
-        _pid, _in, _out, _err = POSIX::Spawn::popen4('killall', '-9', process_name)
-        raise "Unable to kill #{process_name}" unless _pid
-        _in.close
-        _out.read
-        _err.read
-      rescue Errno::EAGAIN
-      # POSIX::Spawn::popen4 may raise EAGAIN. If it does, retry after a second.
-          sleep 1
-          retry
-      ensure
-        [_in, _out, _err].each { |io| io.close unless io.nil? || io.closed? }
-        Process::waitpid(_pid) if _pid
-      end
+      POSIX::Spawn::Child.new("killall -9 #{process_name}")
     end
 
     # android: true to activate Android mode

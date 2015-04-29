@@ -51,7 +51,7 @@ module Flaky
 
     result_dir_postfix = '2' # /tmp/flaky/1
     flaky = Flaky::Run.new(result_dir_postfix)
-    appium = Appium.new unless running_on_sauce
+    appium = Appium.new(android: is_android) unless running_on_sauce
 
     fails.split("\n").each do |test_file|
       file = test_file

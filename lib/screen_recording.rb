@@ -10,18 +10,7 @@ module Flaky
     # app_name for example MyApp.app
     #
     def capture_ios_app_log app_name
-      begin
-        app_glob = "/Users/#{ENV['USER']}/Library/Application Support/iPhone Simulator/7.0.3/Applications/*/#{app_name}"
-        app_folder = File.dirname Dir.glob(app_glob).first
-
-        tmp_log_folder = '/tmp/flaky_tmp_log_folder'
-        FileUtils.rm_rf tmp_log_folder if File.exists? tmp_log_folder
-        FileUtils.mkdir_p tmp_log_folder
-
-        log_glob = File.join app_folder, 'Library/Caches/Logs/*'
-        Dir.glob(log_glob).each { |log| FileUtils.cp log, tmp_log_folder }
-      rescue # folder may not exist. or there could be no longs
-      end
+      # nop -- this feature has moved into the appium server
     end
 
     def screen_recording_binary

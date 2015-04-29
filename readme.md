@@ -20,23 +20,6 @@ This only works with:
 - iOS iPhone Simulator 6.1 +
 - Unique test file names per platform
 
-#### Security dialogs
-
-Instruments prompts for security authorization when testing on iOS.
-Set the following environment variables in `~/.bash_profile`.
-If you don't know your username, type `whoami` in the Terminal and use that value.
-
-```
-export FLAKY_USER="username"
-export FLAKY_PASSWORD="password"
-```
-
-Ensure that Terminal has been granted permission to control the computer. This is set in Security & Privacy -> Accessibility.
-
-![](doc/accessibility_terminal.jpg)
-
-Run `flake auth` to automatically dismiss security dialogs.
-
 --
 
 #### For each test:
@@ -72,4 +55,3 @@ Run `flake auth` to automatically dismiss security dialogs.
     end
   end
 ```
-

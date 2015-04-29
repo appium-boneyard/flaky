@@ -30,10 +30,7 @@ Flaky.no_video = true if ENV['SAUCE_USERNAME'] && ENV['SAUCE_ACCESS_KEY']
 
 puts "Recording Video: #{!Flaky.no_video}"
 
-if args && args.length === 1 && args.first === 'auth'
-  Flaky::AppleScript.beat_security_agent
-  exit
-elsif args && args.length === 3
+if args && args.length === 3
   # .to_i will convert any string to 0 so check using a match regex.
   if args[0].match(/\d+/) && args[1].match(/\d+/)
     raise 'First pass must be 1' unless args[0].to_i == 1
