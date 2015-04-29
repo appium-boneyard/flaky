@@ -1,7 +1,5 @@
 # encoding: utf-8
 module Flaky
-
-
   #noinspection RubyResolve
   class Appium
     include POSIX::Spawn
@@ -18,15 +16,16 @@ module Flaky
 
     # android: true to activate Android mode
     def initialize opts={}
-      @ready = false
+      @ready                = false
       @pid, @in, @out, @err = nil
-      @log = ''
-      @buffer = ''
-      @android = opts.fetch(:android, false)
-      @ios = ! @android
+      @log                  = ''
+      @buffer               = ''
+      @android              = opts.fetch(:android, false)
+      @ios                  = !@android
     end
 
     def start
+      @ready = false
       self.stop # stop existing process
       @log = '/tmp/flaky/appium_tmp_log.txt'
       File.delete(@log) if File.exists? @log
@@ -40,16 +39,17 @@ module Flaky
       end
 
       begin
-        timeout 60 do # timeout in seconds
-          while !self.ready
+        timeout 30 do # timeout in seconds
+          while !@ready
             sleep 0.5
           end
         end
-      rescue Timeout::Error
+      rescue Timeout::Error => ex
         # try again if appium fails to become ready
         # sometimes the simulator never launches.
         # the sim crashes or any number of issues.
-        self.start
+        #self.start
+        raise ex
       end
 
       # -e = -A = include other user's processes
@@ -85,16 +85,23 @@ module Flaky
         raise 'Appium never spawned' if io_array.nil?
 
         ready_for_reading = io_array[0]
+        stream            = ready_for_reading[0]
 
-        ready_for_reading.each do |stream|
-          begin
-            capture = stream.readpartial 999_999
-            update_buffer(capture) if capture
-            @ready = true if !@ready && capture.include?('Appium REST http interface listener started')
-          rescue EOFError
-            out_err.delete stream
-            stream.close
+        begin
+          capture = stream.readpartial 999_999
+          if capture
+            $stdout.puts "#{capture}" # verbose logging
+            update_buffer(capture)
+
+            # info: Appium REST http interface listener started on 0.0.0.0:4723
+            if capture.include?('Appium REST http interface listener started')
+              $stdout.puts 'Appium server successfully started' # verbose logging
+              @ready = true
+            end
           end
+        rescue EOFError
+          out_err.delete stream
+          stream.close
         end
       end
     end
@@ -113,19 +120,20 @@ module Flaky
 
     # Invoked inside a thread by `self.go`
     def launch
-      self.end_all_nodes
       @ready = false
+      self.end_all_nodes
       appium_home = ENV['APPIUM_HOME']
       raise "ENV['APPIUM_HOME'] must be set!" if appium_home.nil? || appium_home.empty?
       contains_appium = File.exists?(File.join(ENV['APPIUM_HOME'], 'bin', 'appium.js'))
       raise "Appium home `#{appium_home}` doesn't contain bin/appium.js!" unless contains_appium
-      cmd = %Q(cd "#{appium_home}"; node . --log-level debug)
+      cmd                   = %Q(node "#{appium_home}" --log-level debug)
       @pid, @in, @out, @err = popen4 cmd
       @in.close
       self # used to chain `launch.wait`
     end
 
     def stop
+      @ready = false
       # https://github.com/tmm1/pygments.rb/blob/master/lib/pygments/popen.rb
       begin
         Process.kill 'KILL', @pid
