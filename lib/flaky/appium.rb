@@ -90,12 +90,12 @@ module Flaky
         begin
           capture = stream.readpartial 999_999
           if capture
-            $stdout.puts "#{capture}" # verbose logging
+            # $stdout.puts "#{capture}" # verbose logging
             update_buffer(capture)
 
             # info: Appium REST http interface listener started on 0.0.0.0:4723
             if capture.include?('Appium REST http interface listener started')
-              $stdout.puts 'Appium server successfully started' # verbose logging
+              # $stdout.puts 'Appium server successfully started' # verbose logging
               @ready = true
             end
           end

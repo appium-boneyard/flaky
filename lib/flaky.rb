@@ -10,7 +10,7 @@ require 'digest/md5'
 require 'toml'
 
 require_relative 'trace'
-Flaky.trace_specs trace: Dir.glob(File.join(__dir__, '**', '*.rb'))
+# Flaky.trace_specs trace: Dir.glob(File.join(__dir__, '**', '*.rb')) # verbose logging
 
 module Flaky
   VERSION = '0.1.2' unless defined? ::Flaky::VERSION
