@@ -9,6 +9,9 @@ require 'posix/spawn' # http://rubygems.org/gems/posix-spawn
 require 'digest/md5'
 require 'toml'
 
+require_relative 'trace'
+Flaky.trace_specs trace: Dir.glob(File.join(__dir__, '**', '*.rb'))
+
 module Flaky
   VERSION = '0.1.2' unless defined? ::Flaky::VERSION
   DATE = '2015-04-28' unless defined? ::Flaky::DATE
