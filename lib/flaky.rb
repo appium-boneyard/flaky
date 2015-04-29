@@ -13,7 +13,7 @@ require_relative 'trace'
 # Flaky.trace_specs trace: Dir.glob(File.join(__dir__, '**', '*.rb')) # verbose logging
 
 module Flaky
-  VERSION = '0.1.2' unless defined? ::Flaky::VERSION
+  VERSION = '0.1.3' unless defined? ::Flaky::VERSION
   DATE = '2015-04-28' unless defined? ::Flaky::DATE
 
   class << self; attr_accessor :no_video; end
