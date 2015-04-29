@@ -1,3 +1,13 @@
+#### v0.1.3 2015-04-28
+
+- [0f7cd63](https://github.com/appium/flaky/commit/0f7cd63b542fa2c0f6db8775bdfe136f729dc2f4) Release 0.1.3
+- [1f30a57](https://github.com/appium/flaky/commit/1f30a57dd9b6f76298a18e18bdfaf49d51be0b7e) Comment out debug logs
+- [70a4d83](https://github.com/appium/flaky/commit/70a4d832a25e4a2acf9748b364be90ce8d0ef780) Fix up code
+- [95c7b0f](https://github.com/appium/flaky/commit/95c7b0f403ff2abb0299b19227432912cb24f5a1) Code clean up
+- [00e2cce](https://github.com/appium/flaky/commit/00e2cced8e37111cd7a286e76632e28937706aac) Enable tracing for debugging
+- [5de26f5](https://github.com/appium/flaky/commit/5de26f5b203c49d5ca4a1b836340ad9bc3930667) Use svg badges
+
+
 #### v0.1.2 2015-04-28
 
 - [8df75d3](https://github.com/appium/flaky/commit/8df75d344c5f963985637c3128bf1173cb34877f) Release 0.1.2
